@@ -17,9 +17,7 @@ function Result() {
         <Navbar />
 
         <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 flex items-center justify-center text-white">
-
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-3xl text-center">
-
             <h2 className="text-3xl font-bold mb-4">
               No Analysis Found
             </h2>
@@ -34,9 +32,7 @@ function Result() {
             >
               Go To Analysis
             </button>
-
           </div>
-
         </div>
       </>
     );
@@ -86,8 +82,7 @@ function Result() {
             </h1>
 
             <p className="text-xl text-indigo-200">
-              Personalized insights for
-              your target career path.
+              Personalized insights for your target career path.
             </p>
 
           </div>
@@ -125,6 +120,62 @@ function Result() {
 
           </div>
 
+          <div className="grid md:grid-cols-4 gap-6 mb-8">
+
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300 text-sm">
+                Readiness Level
+              </p>
+
+              <h3 className="text-2xl font-bold mt-2">
+                {analysis.readinessLevel}
+              </h3>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300 text-sm">
+                Skills Matched
+              </p>
+
+              <h3 className="text-2xl font-bold mt-2">
+                {analysis.matchedSkills}
+              </h3>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300 text-sm">
+                Missing Skills
+              </p>
+
+              <h3 className="text-2xl font-bold mt-2">
+                {analysis.missingSkills.length}
+              </h3>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300 text-sm">
+                Learning Time
+              </p>
+
+              <h3 className="text-2xl font-bold mt-2">
+                {analysis.learningTime}
+              </h3>
+            </div>
+
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
+
+            <h2 className="text-3xl font-bold mb-4">
+              🤖 AI Career Insights
+            </h2>
+
+            <p className="text-indigo-200 leading-8 text-lg">
+              {analysis.recommendation}
+            </p>
+
+          </div>
+
           <div className="grid lg:grid-cols-2 gap-8">
 
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
@@ -137,7 +188,7 @@ function Result() {
 
                 {analysis.missingSkills.length === 0 ? (
                   <span className="bg-green-500 px-4 py-2 rounded-full">
-                    🎉 No Missing Skills
+                     No Missing Skills
                   </span>
                 ) : (
                   analysis.missingSkills.map(
@@ -171,7 +222,7 @@ function Result() {
                       className="bg-white/5 rounded-2xl p-4"
                     >
                       <div className="font-semibold text-lg">
-                        🚀 {project.project_name}
+                         {project.project_name}
                       </div>
                     </div>
                   )
@@ -196,13 +247,11 @@ function Result() {
                   key={index}
                   className="flex gap-4 items-start"
                 >
-
                   <div className="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center font-bold">
                     {item.month_number}
                   </div>
 
                   <div className="bg-white/5 rounded-2xl p-4 flex-1">
-
                     <h3 className="font-bold text-lg">
                       Month {item.month_number}
                     </h3>
@@ -210,9 +259,7 @@ function Result() {
                     <p className="text-indigo-200">
                       {item.topic}
                     </p>
-
                   </div>
-
                 </div>
               ))}
 
