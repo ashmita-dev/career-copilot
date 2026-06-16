@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import jsPDF from "jspdf";
 
 function Result() {
   const location = useLocation();
@@ -38,6 +39,93 @@ function Result() {
     );
   }
 
+  const downloadPDF = () => {
+  const pdf = new jsPDF();
+
+  pdf.setFontSize(22);
+  pdf.text("Career Copilot Report", 20, 20);
+
+  pdf.setFontSize(14);
+  pdf.text(
+    `Match Score: ${analysis.matchPercentage.toFixed(1)}%`,
+    20,
+    40
+  );
+
+  pdf.text(
+    `Readiness Level: ${analysis.readinessLevel}`,
+    20,
+    50
+  );
+
+  pdf.text(
+    `Learning Time: ${analysis.learningTime}`,
+    20,
+    60
+  );
+
+  pdf.text(
+    `Matched Skills: ${analysis.matchedSkills}`,
+    20,
+    70
+  );
+
+  pdf.text(
+    `Missing Skills: ${analysis.missingSkills.length}`,
+    20,
+    80
+  );
+
+  let y = 100;
+
+  pdf.setFontSize(16);
+  pdf.text("Missing Skills", 20, y);
+
+  y += 10;
+
+  analysis.missingSkills.forEach((skill) => {
+    pdf.setFontSize(12);
+    pdf.text(`• ${skill}`, 25, y);
+    y += 8;
+  });
+
+  y += 10;
+
+  pdf.setFontSize(16);
+  pdf.text("Recommended Projects", 20, y);
+
+  y += 10;
+
+  projects.forEach((project) => {
+    pdf.setFontSize(12);
+    pdf.text(
+      `• ${project.project_name}`,
+      25,
+      y
+    );
+    y += 8;
+  });
+
+  y += 10;
+
+  pdf.setFontSize(16);
+  pdf.text("Learning Roadmap", 20, y);
+
+  y += 10;
+
+  roadmap.forEach((item) => {
+    pdf.setFontSize(12);
+    pdf.text(
+      `Month ${item.month_number}: ${item.topic}`,
+      25,
+      y
+    );
+    y += 8;
+  });
+
+  pdf.save("Career_Report.pdf");
+};
+
   const score = analysis.matchPercentage;
 
   let scoreColor =
@@ -64,7 +152,13 @@ function Result() {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white">
+      <div
+  className="min-h-screen text-white"
+  style={{
+    background:
+      "linear-gradient(135deg, #1e1b4b, #0f172a, #3b0764)",
+  }}
+>
 
         <div className="max-w-7xl mx-auto px-6 py-16">
 
@@ -267,16 +361,23 @@ function Result() {
 
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 flex flex-col md:flex-row justify-center gap-4">
 
-            <button
-              onClick={() => navigate("/analyze")}
-              className="bg-white text-indigo-900 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
-            >
-              Analyze Another Role →
-            </button>
+  <button
+    onClick={downloadPDF}
+    className="bg-indigo-500 hover:bg-indigo-600 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
+  >
+    Download PDF Report
+  </button>
 
-          </div>
+  <button
+    onClick={() => navigate("/analyze")}
+    className="bg-white text-indigo-900 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
+  >
+    Analyze Another Role →
+  </button>
+
+</div>
 
         </div>
 
