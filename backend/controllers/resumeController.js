@@ -19,22 +19,51 @@ const extractResumeSkills = async (req, res) => {
       pdfData.text.toLowerCase();
 
     const skillsDatabase = [
-      "Java",
-      "Node.js",
-      "Express.js",
-      "PostgreSQL",
-      "SQL",
-      "REST API",
-      "Docker",
-      "Git",
-    ];
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "PostgreSQL",
+    "SQL",
+    "Git",
+    "GitHub",
+    "Docker",
+    "Java",
+    "Python",
+    "C++",
+    "REST API",
+    "AWS",
+    "Linux",
+    "TensorFlow",
+    "Machine Learning",
+    "Deep Learning",
+    "Pandas",
+    "NumPy",
+    "Power BI",
+    "Excel",
+    "Figma",
+    "UI Design",
+    "UX Research",
+    "Spring Boot",
+];
 
     const detectedSkills =
-      skillsDatabase.filter((skill) =>
-        resumeText.includes(
-          skill.toLowerCase()
-        )
-      );
+  skillsDatabase.filter((skill) => {
+    const escapedSkill = skill
+      .toLowerCase()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const regex = new RegExp(
+      `\\b${escapedSkill}\\b`,
+      "i"
+    );
+
+    return regex.test(resumeText);
+  });
 
     res.status(200).json({
       detectedSkills,

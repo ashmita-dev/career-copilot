@@ -9,14 +9,17 @@ import {
   analyzeProfile as analyzeProfileAPI,
   getProjects,
   getRoadmap,
+  uploadResume,
 } from "../services/api";
 
 function Analyze() {
-  const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState([]); 
   const [skills, setSkills] = useState([]);
   const [roleSkills, setRoleSkills] = useState([]);
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
+  const [resumeFile, setResumeFile] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -72,6 +75,38 @@ function Analyze() {
       ]);
     }
   };
+
+  const handleResumeUpload = async () => {
+  try {
+    if (!resumeFile) {
+      alert("Please select a resume");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("resume", resumeFile);
+
+    const response =
+      await uploadResume(formData);
+
+    setSelectedSkills((prev) => [
+  ...new Set([
+    ...prev,
+    ...response.data.detectedSkills,
+  ]),
+]);
+
+    setUploadMessage(
+      `Detected ${response.data.detectedSkills.length} skills from resume`
+    );
+
+  } catch (error) {
+    console.error(error);
+    setUploadMessage(
+      "Failed to process resume"
+    );
+  }
+};
 
   const analyzeProfile = async () => {
     try {
@@ -136,6 +171,44 @@ function Analyze() {
             </p>
 
           </div>
+          
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
+
+  <h2 className="text-2xl font-bold mb-4">
+    Upload Resume
+  </h2>
+
+  <p className="text-indigo-200 mb-6">
+    Upload your resume and automatically detect your skills.
+  </p>
+
+  <div className="flex flex-col md:flex-row gap-4">
+
+    <input
+      type="file"
+      accept=".pdf"
+      onChange={(e) =>
+        setResumeFile(e.target.files[0])
+      }
+      className="flex-1 p-3 rounded-xl bg-white/10 border border-white/20"
+    />
+
+    <button
+      onClick={handleResumeUpload}
+      className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl font-semibold transition"
+    >
+      Upload Resume
+    </button>
+
+  </div>
+
+  {uploadMessage && (
+    <div className="mt-4 bg-green-500/20 border border-green-400/30 text-green-300 px-4 py-3 rounded-xl font-medium">
+      {uploadMessage}
+    </div>
+  )}
+
+</div>
 
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
 

@@ -21,3 +21,10 @@ export const getProjects = (roleId) =>
 
 export const getRoadmap = (roleId) =>
   API.get(`/roadmaps/${roleId}`);
+
+export const uploadResume = (formData) =>
+  API.post("/resume/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
