@@ -11,6 +11,9 @@ const resumeRoutes = require("./routes/resumeRoutes");
 const analysisHistoryRoutes = require(
   "./routes/analysisHistoryRoutes"
 );
+const careerGoalRoutes = require(
+  "./routes/careerGoalRoutes"
+);
 
 dotenv.config();
 
@@ -29,6 +32,10 @@ app.use("/api/resume", resumeRoutes);
 app.use(
   "/api/analysis-history",
   analysisHistoryRoutes
+);
+app.use(
+  "/api/goals",
+  careerGoalRoutes
 );
 
 app.get("/", (req, res) => {

@@ -31,3 +31,9 @@ export const uploadResume = (formData) =>
 
   export const getAnalysisHistory = () =>
   API.get("/analysis-history");
+
+  export const createGoal = (data) =>
+  API.post("/goals", data);
+
+export const getGoals = () =>
+  API.get("/goals");

@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Analyze from "./pages/Analyze";
 import Result from "./pages/Result";
 import History from "./pages/History";
+import Goals from "./pages/Goals";
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
         <Route
           path="/history"
           element={<History />}
+        />
+
+        <Route
+          path="/goals"
+          element={<Goals />}
         />
 
       </Routes>
