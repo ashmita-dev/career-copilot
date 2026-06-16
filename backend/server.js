@@ -8,6 +8,9 @@ const projectRoutes = require("./routes/projectRoutes");
 const roleSkillRoutes = require("./routes/roleSkillRoutes");
 const analysisRoutes = require("./routes/analysisRoutes");
 const resumeRoutes = require("./routes/resumeRoutes");
+const analysisHistoryRoutes = require(
+  "./routes/analysisHistoryRoutes"
+);
 
 dotenv.config();
 
@@ -23,6 +26,10 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/role-skills", roleSkillRoutes);
 app.use("/api/analyze", analysisRoutes);
 app.use("/api/resume", resumeRoutes);
+app.use(
+  "/api/analysis-history",
+  analysisHistoryRoutes
+);
 
 app.get("/", (req, res) => {
   res.send("Career Copilot Backend Running");

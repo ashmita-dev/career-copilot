@@ -1,5 +1,8 @@
 const roleSkillModel = require("../models/roleSkillModel");
 const { analyzeSkills } = require("../utils/analysisUtil");
+const analysisHistoryModel = require(
+  "../models/analysisHistoryModel"
+);
 
 const analyzeRole = async (req, res) => {
   try {
@@ -14,11 +17,17 @@ const analyzeRole = async (req, res) => {
       }));
 
     const analysis = analyzeSkills(
-      requiredSkills,
-      formattedUserSkills
-    );
+    requiredSkills,
+    formattedUserSkills);
+
+    await analysisHistoryModel.saveAnalysis(
+    roleId,
+    analysis.matchPercentage,
+    analysis.readinessLevel,
+    analysis.learningTime);
 
     res.status(200).json(analysis);
+
   } catch (error) {
     console.error(error);
 

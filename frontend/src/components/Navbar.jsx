@@ -43,12 +43,23 @@ function Navbar() {
           <Link
             to="/analyze"
             className={`px-5 py-2 rounded-xl transition-all duration-300 ${
-              location.pathname === "/analyze"
-                ? "bg-indigo-600 text-white font-semibold shadow-md"
-                : "text-slate-700 hover:bg-slate-100"
+            location.pathname === "/analyze"
+            ? "bg-indigo-600 text-white font-semibold shadow-md"
+            : "text-slate-700 hover:bg-slate-100"
             }`}
-          >
+            >
             Analyze
+          </Link>
+
+          <Link
+            to="/history"
+            className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+            location.pathname === "/history"
+            ? "bg-indigo-600 text-white font-semibold shadow-md"
+            : "text-slate-700 hover:bg-slate-100"
+            }`}
+            >
+            History
           </Link>
 
         </div>

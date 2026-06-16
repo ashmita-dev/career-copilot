@@ -7,6 +7,7 @@ import {
 import Home from "./pages/Home";
 import Analyze from "./pages/Analyze";
 import Result from "./pages/Result";
+import History from "./pages/History";
 
 function App() {
   return (
@@ -26,6 +27,11 @@ function App() {
         <Route
           path="/result"
           element={<Result />}
+        />
+
+        <Route
+          path="/history"
+          element={<History />}
         />
 
       </Routes>

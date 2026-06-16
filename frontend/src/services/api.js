@@ -28,3 +28,6 @@ export const uploadResume = (formData) =>
       "Content-Type": "multipart/form-data",
     },
   });
+
+  export const getAnalysisHistory = () =>
+  API.get("/analysis-history");
