@@ -32,6 +32,11 @@ export const uploadResume = (formData) =>
   export const getAnalysisHistory = () =>
   API.get("/analysis-history");
 
+  export const deleteHistory = (id) =>
+  API.delete(
+    `/analysis-history/${id}`
+  );
+
   export const createGoal = (data) =>
   API.post("/goals", data);
 

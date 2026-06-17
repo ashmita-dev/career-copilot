@@ -21,4 +21,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    await analysisHistoryModel.deleteHistory(
+      req.params.id
+    );
+
+    res.status(200).json({
+      message: "Deleted",
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

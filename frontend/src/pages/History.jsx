@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { getAnalysisHistory } from "../services/api";
+import {
+  getAnalysisHistory,
+  deleteHistory,
+} from "../services/api";
 import {
   LineChart,
   Line,
@@ -13,6 +16,11 @@ import {
 
 function History() {
   const [history, setHistory] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] =
+  useState(false);
+
+  const [selectedHistoryId, setSelectedHistoryId] =
+  useState(null);   
   const totalAnalyses = history.length;
 
 const highestScore =
@@ -51,6 +59,24 @@ const averageScore =
         await getAnalysisHistory();
 
       setHistory(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+ const handleDeleteHistory =
+  async () => {
+    try {
+      await deleteHistory(
+        selectedHistoryId
+      );
+
+      fetchHistory();
+
+      setShowDeleteModal(false);
+
+      setSelectedHistoryId(null);
+
     } catch (error) {
       console.error(error);
     }
@@ -146,9 +172,28 @@ const averageScore =
                 key={item.id}
                 className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6"
               >
-                <h2 className="text-2xl font-bold">
-                  {item.role_name}
-                </h2>
+                <div className="flex justify-between items-start">
+
+  <h2 className="text-2xl font-bold">
+    {item.role_name}
+  </h2>
+
+  <button
+    onClick={() => {
+  setSelectedHistoryId(
+    item.id
+  );
+
+  setShowDeleteModal(
+    true
+  );
+}}
+    className="text-red-400 hover:text-red-300 text-xl transition"
+  >
+    🗑️
+  </button>
+
+</div>
 
                 <p className="text-indigo-200 mt-2">
                   Match Score:
@@ -184,6 +229,46 @@ const averageScore =
         </div>
 
       </div>
+       {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+
+          <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-[420px] shadow-2xl">
+
+            <h2 className="text-2xl font-bold mb-4">
+              Delete Analysis
+            </h2>
+
+            <p className="text-indigo-200 mb-8">
+              Are you sure you want to delete this analysis?
+              This action cannot be undone.
+            </p>
+
+            <div className="flex justify-end gap-4">
+
+              <button
+                onClick={() => {
+                setShowDeleteModal(false);
+                setSelectedHistoryId(null);
+                }}
+                className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={handleDeleteHistory}
+                className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 transition"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>  
+      )}
+      
     </>
   );
 }

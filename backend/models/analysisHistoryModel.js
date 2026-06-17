@@ -49,7 +49,17 @@ const getAnalysisHistory =
     return result.rows;
   };
 
+  const deleteHistory = async (id) => {
+  const query = `
+    DELETE FROM analysis_history
+    WHERE id = $1
+  `;
+
+  await db.query(query, [id]);
+};
+
 module.exports = {
   saveAnalysis,
   getAnalysisHistory,
+  deleteHistory,
 };
