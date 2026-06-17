@@ -23,35 +23,85 @@ const followers =
 const bio =
   userResponse.data.bio;
 
+  const strengths = [];
+
+const improvements = [];
+
 let githubScore = 0;
 
-if (repos >= 20)
+if (repos >= 20) {
   githubScore += 30;
-else if (repos >= 10)
-  githubScore += 20;
-else if (repos >= 5)
-  githubScore += 10;
 
-if (followers >= 100)
+  strengths.push(
+    "Excellent repository count"
+  );
+}
+else if (repos >= 10) {
+  githubScore += 20;
+
+  strengths.push(
+    "Good repository count"
+  );
+}
+else {
+  improvements.push(
+    "Create more public repositories"
+  );
+}
+
+if (followers >= 100) {
   githubScore += 25;
-else if (followers >= 50)
+
+  strengths.push(
+    "Strong GitHub community presence"
+  );
+}
+else if (followers >= 50) {
   githubScore += 15;
-else if (followers >= 10)
+
+  strengths.push(
+    "Growing GitHub audience"
+  );
+}
+else if (followers >= 10) {
   githubScore += 10;
 
-if (bio)
+  strengths.push(
+    "Some GitHub visibility"
+  );
+}
+else {
+  improvements.push(
+    "Increase profile visibility and engagement"
+  );
+}
+
+if (bio) {
   githubScore += 20;
+
+  strengths.push(
+    "Professional profile bio added"
+  );
+}
+else {
+  improvements.push(
+    "Add a GitHub profile bio"
+  );
+}
 
 githubScore += 25;
 
 console.log(githubScore);
 
-      res.status(200).json({
+   res.status(200).json({
   username:
     userResponse.data.login,
 
   name:
     userResponse.data.name,
+
+  avatar:
+  userResponse.data.avatar_url,
 
   publicRepos:
     repos,
@@ -64,6 +114,12 @@ console.log(githubScore);
 
   githubScore:
     githubScore,
+
+  strengths:
+    strengths,
+
+  improvements:
+    improvements,
 });
     
       } catch (error) {

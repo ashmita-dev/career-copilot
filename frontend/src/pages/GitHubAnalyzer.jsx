@@ -9,6 +9,20 @@ function GitHubAnalyzer() {
   const [result, setResult] =
   useState(null);
 
+  const getBadge = (score) => {
+
+  if (score >= 80)
+    return "🏆 Excellent";
+
+  if (score >= 60)
+    return "🚀 Strong";
+
+  if (score >= 40)
+    return "📈 Average";
+
+  return "🌱 Beginner";
+};  
+
   const handleAnalyze = async () => {
   try {
     const response =
@@ -85,6 +99,12 @@ function GitHubAnalyzer() {
 
     <div className="mt-6 mb-8 text-center bg-indigo-600/20 border border-indigo-400/30 rounded-2xl p-6">
 
+  <img
+    src={result.avatar}
+    alt="GitHub Avatar"
+    className="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-indigo-400"
+  />
+
   <p className="text-indigo-300 text-lg">
     GitHub Readiness Score
   </p>
@@ -92,6 +112,10 @@ function GitHubAnalyzer() {
   <h2 className="text-6xl font-bold mt-2">
     {result.githubScore}/100
   </h2>
+
+  <p className="text-2xl font-semibold mt-3">
+  {getBadge(result.githubScore)}
+</p>
 
 </div>
 
@@ -138,6 +162,47 @@ function GitHubAnalyzer() {
       </div>
 
     </div>
+    <div className="grid md:grid-cols-2 gap-6 mt-10">
+
+  <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-6">
+
+    <h3 className="text-2xl font-bold text-green-400 mb-4">
+      Strengths
+    </h3>
+
+    {result.strengths?.map(
+      (item, index) => (
+        <p
+          key={index}
+          className="mb-2"
+        >
+          ✅ {item}
+        </p>
+      )
+    )}
+
+  </div>
+
+  <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-6">
+
+    <h3 className="text-2xl font-bold text-yellow-400 mb-4">
+      Improvements
+    </h3>
+
+    {result.improvements?.map(
+      (item, index) => (
+        <p
+          key={index}
+          className="mb-2"
+        >
+          ⚠️ {item}
+        </p>
+      )
+    )}
+
+  </div>
+
+</div>
 
   </div>
 )}
