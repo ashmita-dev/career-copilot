@@ -46,7 +46,32 @@ const getGoals = async (
   }
 };
 
+const deleteGoal = async (
+  req,
+  res
+) => {
+  try {
+    const { id } = req.params;
+
+    const deletedGoal =
+      await careerGoalModel.deleteGoal(
+        id
+      );
+
+    res.status(200).json(
+      deletedGoal
+    );
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createGoal,
   getGoals,
+  deleteGoal,
 };

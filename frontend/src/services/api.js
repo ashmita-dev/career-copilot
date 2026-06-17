@@ -35,5 +35,8 @@ export const uploadResume = (formData) =>
   export const createGoal = (data) =>
   API.post("/goals", data);
 
-export const getGoals = () =>
+  export const getGoals = () =>
   API.get("/goals");
+
+  export const deleteGoal = (id) =>
+  API.delete(`/goals/${id}`);

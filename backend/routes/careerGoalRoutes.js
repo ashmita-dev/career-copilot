@@ -6,6 +6,7 @@ const router =
 const {
   createGoal,
   getGoals,
+  deleteGoal,
 } = require(
   "../controllers/careerGoalController"
 );
@@ -18,6 +19,11 @@ router.post(
 router.get(
   "/",
   getGoals
+);
+
+router.delete(
+  "/:id",
+  deleteGoal
 );
 
 module.exports = router;

@@ -65,9 +65,45 @@ const extractResumeSkills = async (req, res) => {
     return regex.test(resumeText);
   });
 
-    res.status(200).json({
-      detectedSkills,
-    });
+    const importantSkills = [
+  "React",
+  "Node.js",
+  "Express.js",
+  "PostgreSQL",
+  "Docker",
+  "Git",
+  "REST API",
+];
+
+const missingSkills =
+  importantSkills.filter(
+    (skill) =>
+      !detectedSkills.includes(skill)
+  );
+
+let recommendation =
+  "Great start. Continue building projects and strengthening your portfolio.";
+
+if (
+  missingSkills.includes("Docker") ||
+  missingSkills.includes("REST API")
+) {
+  recommendation =
+    "Focus on Docker and REST API development to improve job readiness.";
+}
+
+res.status(200).json({
+  detectedSkills,
+
+  feedback: {
+    strengths:
+      detectedSkills.slice(0, 5),
+
+    missingSkills,
+
+    recommendation,
+  },
+});
 
   } catch (error) {
     console.error(error);

@@ -4,6 +4,7 @@ import {
   getRoles,
   createGoal,
   getGoals,
+  deleteGoal,
 } from "../services/api";
 
 function Goals() {
@@ -57,6 +58,24 @@ function Goals() {
       console.error(error);
     }
   };
+
+  const handleDeleteGoal = async (
+  id
+) => {
+  if (
+  !window.confirm(
+    "Delete this goal?"
+  )
+)
+  return;
+  try {
+    await deleteGoal(id);
+
+    fetchGoals();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   return (
     <>
@@ -127,28 +146,91 @@ function Goals() {
 
           <div className="space-y-6">
 
-            {goals.map((goal) => (
-              <div
-                key={goal.id}
-                className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6"
-              >
-                <h2 className="text-2xl font-bold">
-                  {goal.role_name}
-                </h2>
+           {goals.map((goal) => {
+  const progress = Math.min(
+    ((goal.current_score || 0) /
+      goal.target_score) *
+      100,
+    100
+  );
 
-                <p className="text-indigo-200 mt-2">
-                  Target Score:
-                  {" "}
-                  {goal.target_score}%
-                </p>
+  const achieved =
+    (goal.current_score || 0) >=
+    goal.target_score;
 
-                <p className="text-indigo-300 text-sm mt-2">
-                  {new Date(
-                    goal.created_at
-                  ).toLocaleString()}
-                </p>
-              </div>
-            ))}
+  return (
+    <div
+      key={goal.id}
+      className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6"
+    >
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <div className="flex justify-between items-start">
+
+  <h2 className="text-2xl font-bold">
+    {goal.role_name}
+  </h2>
+
+</div>
+
+          <p className="text-indigo-200 mt-2">
+            Target Score: {goal.target_score}%
+          </p>
+
+          <p className="text-indigo-200">
+            Current Score:{" "}
+            {Number(
+              goal.current_score || 0
+            ).toFixed(1)}
+            %
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+
+  <button
+    onClick={() =>
+      handleDeleteGoal(goal.id)
+    }
+    className="text-red-400 hover:text-red-300 text-xl transition"
+  >
+    🗑️
+  </button>
+
+  {achieved ? (
+    <span className="bg-green-500 px-4 py-2 rounded-full font-semibold">
+      🏆 Goal Achieved
+    </span>
+  ) : (
+    <span className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold">
+      In Progress
+    </span>
+  )}
+
+</div>
+      </div>
+
+      <div className="w-full h-4 bg-white/10 rounded-full overflow-hidden mb-3">
+        <div
+          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+          style={{
+            width: `${progress}%`,
+          }}
+        />
+      </div>
+
+      <p className="text-indigo-300">
+        Progress: {progress.toFixed(0)}%
+      </p>
+
+      <p className="text-indigo-400 text-sm mt-3">
+        {new Date(
+          goal.created_at
+        ).toLocaleString()}
+      </p>
+    </div>
+  );
+})}
 
           </div>
 

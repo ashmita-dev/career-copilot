@@ -8,7 +8,6 @@ import {
   getRoleSkills,
   analyzeProfile as analyzeProfileAPI,
   getProjects,
-  getRoadmap,
   uploadResume,
 } from "../services/api";
 
@@ -20,6 +19,7 @@ function Analyze() {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [resumeFile, setResumeFile] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
+  const [resumeFeedback, setResumeFeedback] = useState(null);
 
   const navigate = useNavigate();
 
@@ -100,6 +100,10 @@ function Analyze() {
       `Detected ${response.data.detectedSkills.length} skills from resume`
     );
 
+    setResumeFeedback(
+    response.data.feedback
+);
+
   } catch (error) {
     console.error(error);
     setUploadMessage(
@@ -124,16 +128,14 @@ function Analyze() {
       const projectsResponse =
         await getProjects(selectedRole);
 
-      const roadmapResponse =
-        await getRoadmap(selectedRole);
-
       navigate("/result", {
         state: {
-          analysis: analysisResponse.data,
-          projects: projectsResponse.data,
-          roadmap: roadmapResponse.data,
-        },
-      });
+        analysis: analysisResponse.data,
+        projects: projectsResponse.data,
+        roadmap:
+        analysisResponse.data.roadmap,
+      },
+});
     } catch (error) {
       console.error(
         "Analysis failed:",
