@@ -9,6 +9,7 @@ import Analyze from "./pages/Analyze";
 import Result from "./pages/Result";
 import History from "./pages/History";
 import Goals from "./pages/Goals";
+import GitHubAnalyzer from "./pages/GitHubAnalyzer";
 
 function App() {
   return (
@@ -38,6 +39,11 @@ function App() {
         <Route
           path="/goals"
           element={<Goals />}
+        />
+
+        <Route
+          path="/github-analyzer"
+          element={<GitHubAnalyzer />}
         />
 
       </Routes>

@@ -73,6 +73,17 @@ function Navbar() {
           Goals
           </Link>
 
+          <Link
+            to="/github-analyzer"
+            className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+            location.pathname === "/github-analyzer"
+            ? "bg-indigo-600 text-white font-semibold shadow-md"
+            : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+  GitHub Analyzer
+</Link>
+
         </div>
 
       </div>

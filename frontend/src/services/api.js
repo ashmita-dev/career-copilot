@@ -45,3 +45,8 @@ export const uploadResume = (formData) =>
 
   export const deleteGoal = (id) =>
   API.delete(`/goals/${id}`);
+
+  export const analyzeGitHub = (username) =>
+  API.post("/github/analyze", {
+    username,
+  });

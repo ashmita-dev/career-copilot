@@ -14,6 +14,8 @@ const analysisHistoryRoutes = require(
 const careerGoalRoutes = require(
   "./routes/careerGoalRoutes"
 );
+const githubRoutes =
+  require("./routes/githubRoutes");
 
 dotenv.config();
 
@@ -36,6 +38,10 @@ app.use(
 app.use(
   "/api/goals",
   careerGoalRoutes
+);
+app.use(
+  "/api/github",
+  githubRoutes
 );
 
 app.get("/", (req, res) => {
