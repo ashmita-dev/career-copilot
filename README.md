@@ -6,6 +6,10 @@ The platform combines career planning, resume analysis, portfolio analysis, and 
 
 ---
 
+## Live Demo
+
+https://your-frontend-render-url.onrender.com
+
 # ✨ Features
 
 ## 🎯 Career Analysis
