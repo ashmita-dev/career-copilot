@@ -8,7 +8,7 @@ The platform combines career planning, resume analysis, portfolio analysis, and 
 
 ## Live Demo
 
-https://your-frontend-render-url.onrender.com
+https://career-copilot-frontend.onrender.com
 
 # ✨ Features
 
