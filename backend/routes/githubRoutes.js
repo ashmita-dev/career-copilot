@@ -34,15 +34,45 @@ router.post(
     0
   );
 
-  const topRepo =
-  reposResponse.data.reduce(
+  const scoredRepos =
+  reposResponse.data.map(
+    (repo) => {
+
+      let score = 0;
+
+      if (repo.description)
+        score += 30;
+
+      if (repo.language)
+        score += 20;
+
+      if (repo.stargazers_count > 0)
+        score += 25;
+
+      if (repo.forks_count > 0)
+        score += 10;
+
+      if (!repo.private)
+        score += 15;
+
+      return {
+        ...repo,
+        qualityScore: score,
+      };
+    }
+  );
+
+const topRepo =
+  scoredRepos.reduce(
     (best, current) =>
-      current.stargazers_count >
-      best.stargazers_count
+      current.qualityScore >
+      best.qualityScore
         ? current
         : best,
-    reposResponse.data[0]
+    scoredRepos[0]
   );
+
+  console.log("TOP REPO:", topRepo.name);
 
   const reposWithoutDescription =
   reposResponse.data.filter(
