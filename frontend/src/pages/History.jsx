@@ -188,7 +188,7 @@ const averageScore =
     true
   );
 }}
-    className="text-red-400 hover:text-red-300 text-xl transition"
+    className="text-red-400 hover:text-red-300 text-xl transition cursor-pointer active:scale-95"
   >
     🗑️
   </button>
@@ -257,7 +257,7 @@ const averageScore =
 
               <button
                 onClick={handleDeleteHistory}
-                className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 transition"
+                className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 transition cursor-pointer active:scale-95"
               >
                 Delete
               </button>

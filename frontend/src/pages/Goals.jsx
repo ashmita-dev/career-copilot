@@ -14,6 +14,11 @@ function Goals() {
     useState("");
   const [targetScore, setTargetScore] =
     useState("");
+  const [showDeleteModal, setShowDeleteModal] =
+  useState(false);
+
+  const [goalToDelete, setGoalToDelete] =
+  useState(null);
 
   useEffect(() => {
     fetchRoles();
@@ -59,23 +64,33 @@ function Goals() {
     }
   };
 
-  const handleDeleteGoal = async (
+  const handleDeleteGoal = (
   id
 ) => {
-  if (
-  !window.confirm(
-    "Delete this goal?"
-  )
-)
-  return;
-  try {
-    await deleteGoal(id);
-
-    fetchGoals();
-  } catch (error) {
-    console.error(error);
-  }
+  setGoalToDelete(id);
+  setShowDeleteModal(true);
 };
+
+const confirmDeleteGoal =
+  async () => {
+    try {
+      await deleteGoal(
+        goalToDelete
+      );
+
+      fetchGoals();
+
+      setShowDeleteModal(
+        false
+      );
+
+      setGoalToDelete(
+        null
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -192,7 +207,7 @@ function Goals() {
     onClick={() =>
       handleDeleteGoal(goal.id)
     }
-    className="text-red-400 hover:text-red-300 text-xl transition"
+    className="text-red-400 hover:text-red-300 text-xl transition cursor-pointer active:scale-95"
   >
     🗑️
   </button>
@@ -237,6 +252,47 @@ function Goals() {
         </div>
 
       </div>
+      {showDeleteModal && (
+  <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+    <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-[450px]">
+
+      <h2 className="text-2xl font-bold mb-4">
+        Delete Goal
+      </h2>
+
+      <p className="text-indigo-200 mb-6">
+        Are you sure you want to delete this goal?
+      </p>
+
+      <div className="flex justify-end gap-3">
+
+        <button
+          onClick={() =>
+            setShowDeleteModal(
+              false
+            )
+          }
+          className="px-5 py-2 rounded-xl bg-white/10"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={
+            confirmDeleteGoal
+          }
+          className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 cursor-pointer active:scale-95"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
     </>
   );
 }

@@ -46,14 +46,18 @@ router.post(
       if (repo.language)
         score += 20;
 
-      if (repo.stargazers_count > 0)
-        score += 25;
+      score += repo.stargazers_count * 5;
 
-      if (repo.forks_count > 0)
-        score += 10;
+      score += repo.forks_count * 3;
 
       if (!repo.private)
         score += 15;
+      
+      if (repo.size > 100)
+      score += 20;
+
+      if (repo.size > 500)
+      score += 30;
 
       return {
         ...repo,
