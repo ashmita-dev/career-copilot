@@ -1,5 +1,10 @@
 const express = require("express");
 const axios = require("axios");
+const githubHeaders = {
+  headers: {
+    Authorization: `token ${process.env.GITHUB_TOKEN}`,
+  },
+};
 
 const router = express.Router();
 
@@ -10,9 +15,40 @@ router.post(
       const { username } = req.body;
 
       const userResponse =
-        await axios.get(
-          `https://api.github.com/users/${username}`
-          );
+  await axios.get(
+    `https://api.github.com/users/${username}`,
+    githubHeaders
+  );
+
+          const reposResponse =
+  await axios.get(
+    `https://api.github.com/users/${username}/repos`,
+    githubHeaders
+  );
+
+  const totalStars =
+  reposResponse.data.reduce(
+    (sum, repo) =>
+      sum +
+      repo.stargazers_count,
+    0
+  );
+
+  const topRepo =
+  reposResponse.data.reduce(
+    (best, current) =>
+      current.stargazers_count >
+      best.stargazers_count
+        ? current
+        : best,
+    reposResponse.data[0]
+  );
+
+  const reposWithoutDescription =
+  reposResponse.data.filter(
+    (repo) =>
+      !repo.description
+  ).length;
 
       const repos =
   userResponse.data.public_repos;
@@ -26,6 +62,8 @@ const bio =
   const strengths = [];
 
 const improvements = [];
+
+const actionPlan = [];
 
 let githubScore = 0;
 
@@ -46,6 +84,12 @@ else if (repos >= 10) {
 else {
   improvements.push(
     "Create more public repositories"
+  );
+}
+
+if (userResponse.data.public_repos < 5) {
+  actionPlan.push(
+    "Build and publish more projects on GitHub"
   );
 }
 
@@ -76,6 +120,12 @@ else {
   );
 }
 
+if (userResponse.data.followers < 20) {
+  actionPlan.push(
+    "Share projects and contribute to open source to grow visibility"
+  );
+}
+
 if (bio) {
   githubScore += 20;
 
@@ -87,8 +137,23 @@ else {
   improvements.push(
     "Add a GitHub profile bio"
   );
+
+  actionPlan.push(
+  "Write a professional GitHub profile bio describing your skills and interests"
+);
 }
 
+if (
+  reposWithoutDescription >= 3
+) {
+  improvements.push(
+    `${reposWithoutDescription} repositories are missing descriptions`
+  );
+
+  actionPlan.push(
+    "Add meaningful descriptions to your repositories so recruiters can quickly understand your projects"
+  );
+}
 githubScore += 25;
 
 console.log(githubScore);
@@ -109,6 +174,20 @@ console.log(githubScore);
   followers:
     followers,
 
+  totalStars:
+    totalStars,
+
+  topRepo: {
+  name:
+    topRepo?.name,
+
+  stars:
+    topRepo?.stargazers_count,
+
+  language:
+    topRepo?.language,
+},
+
   bio:
     bio,
 
@@ -120,6 +199,9 @@ console.log(githubScore);
 
   improvements:
     improvements,
+
+  actionPlan:
+    actionPlan,
 });
     
       } catch (error) {

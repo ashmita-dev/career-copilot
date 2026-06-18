@@ -86,7 +86,7 @@ function GitHubAnalyzer() {
 
               <button
                 onClick={handleAnalyze}
-                className="bg-indigo-600 hover:bg-indigo-700 px-8 py-4 rounded-2xl font-semibold transition"
+                className="bg-indigo-600 hover:bg-indigo-700 px-8 py-4 rounded-2xl font-semibold transition cursor-pointer active:scale-95"
               >
               Analyze
             </button>
@@ -161,6 +161,45 @@ function GitHubAnalyzer() {
         </p>
       </div>
 
+      <div>
+  <p className="text-indigo-300">
+    Total Stars
+  </p>
+
+  <p className="text-xl font-semibold">
+    ⭐ {result.totalStars}
+  </p>
+</div>
+
+<div className="md:col-span-2 bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-5 mt-2">
+
+  <h3 className="text-xl font-bold text-yellow-400 mb-3">
+    🏆 Top Repository
+  </h3>
+
+  <p className="mb-2">
+    <span className="text-indigo-300">
+      Repository:
+    </span>{" "}
+    {result.topRepo?.name}
+  </p>
+
+  <p className="mb-2">
+    <span className="text-indigo-300">
+      Stars:
+    </span>{" "}
+    ⭐ {result.topRepo?.stars}
+  </p>
+
+  <p>
+    <span className="text-indigo-300">
+      Language:
+    </span>{" "}
+    {result.topRepo?.language || "Not Available"}
+  </p>
+
+</div>
+
     </div>
     <div className="grid md:grid-cols-2 gap-6 mt-10">
 
@@ -201,6 +240,33 @@ function GitHubAnalyzer() {
     )}
 
   </div>
+
+</div>
+
+<div className="mt-8 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-6">
+
+  <h3 className="text-2xl font-bold text-indigo-300 mb-4">
+    🎯 Recommended Next Steps
+  </h3>
+
+  {result.actionPlan?.length > 0 ? (
+    result.actionPlan.map(
+      (step, index) => (
+        <p
+          key={index}
+          className="mb-3"
+        >
+          {index + 1}. {step}
+        </p>
+      )
+    )
+  ) : (
+    <p>
+      Your GitHub profile is in good shape.
+      Focus on building advanced projects
+      and maintaining consistent activity.
+    </p>
+  )}
 
 </div>
 
