@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://career-copilot-7fhl.onrender.com/api",
+  baseURL: "http://localhost:5000/api",
 });
 
 export const getRoles = () =>
@@ -50,3 +50,19 @@ export const uploadResume = (formData) =>
   API.post("/github/analyze", {
     username,
   });
+
+  export const registerUser = (
+  data
+) =>
+  API.post(
+    "/auth/register",
+    data
+  );
+
+  export const loginUser = (
+  data
+) =>
+  API.post(
+    "/auth/login",
+    data
+  );

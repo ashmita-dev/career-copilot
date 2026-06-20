@@ -1,13 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const { token, logout } = useAuth();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   const location = useLocation();
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-slate-200 shadow-sm">
-
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
         <Link
           to="/"
           className="flex items-center gap-3"
@@ -27,8 +36,7 @@ function Navbar() {
           </div>
         </Link>
 
-        <div className="flex gap-3">
-
+        <div className="flex gap-3 items-center">
           <Link
             to="/"
             className={`px-5 py-2 rounded-xl transition-all duration-300 ${
@@ -40,54 +48,101 @@ function Navbar() {
             Home
           </Link>
 
+          {!token && (
+          <Link
+            to="/login"
+            className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+            location.pathname === "/login"
+            ? "bg-indigo-600 text-white font-semibold shadow-md"
+            : "text-slate-700 hover:bg-slate-100"
+          }`}
+          >
+            Login
+          </Link>
+        )}
+
+        {!token && (
+        <Link
+          to="/register"
+          className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+          location.pathname === "/register"
+          ? "bg-indigo-600 text-white font-semibold shadow-md"
+          : "text-slate-700 hover:bg-slate-100"
+        }`}
+        >
+          Register
+        </Link>
+        )}
+
+          {token && (
           <Link
             to="/analyze"
             className={`px-5 py-2 rounded-xl transition-all duration-300 ${
             location.pathname === "/analyze"
             ? "bg-indigo-600 text-white font-semibold shadow-md"
             : "text-slate-700 hover:bg-slate-100"
-            }`}
-            >
+          }`}
+          >
             Analyze
           </Link>
+          )}
 
-          <Link
-            to="/history"
-            className={`px-5 py-2 rounded-xl transition-all duration-300 ${
-            location.pathname === "/history"
-            ? "bg-indigo-600 text-white font-semibold shadow-md"
-            : "text-slate-700 hover:bg-slate-100"
-            }`}
+          {token && (
+  <>
+    <Link
+      to="/history"
+      className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+        location.pathname === "/history"
+          ? "bg-indigo-600 text-white font-semibold shadow-md"
+          : "text-slate-700 hover:bg-slate-100"
+      }`}
+    >
+      History
+    </Link>
+
+    <Link
+      to="/goals"
+      className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+        location.pathname === "/goals"
+          ? "bg-indigo-600 text-white font-semibold shadow-md"
+          : "text-slate-700 hover:bg-slate-100"
+      }`}
+    >
+      Goals
+    </Link>
+
+    <Link
+      to="/github-analyzer"
+      className={`px-5 py-2 rounded-xl transition-all duration-300 ${
+        location.pathname === "/github-analyzer"
+          ? "bg-indigo-600 text-white font-semibold shadow-md"
+          : "text-slate-700 hover:bg-slate-100"
+      }`}
+    >
+      GitHub Analyzer
+    </Link>
+  </>
+)}
+
+          {token && (
+            <button
+              onClick={handleLogout}
+              className="
+                px-4 py-2
+               bg-slate-800
+               hover:bg-slate-900
+               text-white  
+                rounded-xl
+                font-semibold
+                cursor-pointer
+                active:scale-95
+              "
             >
-            History
-          </Link>
-
-          <Link
-            to="/goals"
-            className={`px-5 py-2 rounded-xl transition-all duration-300 ${
-            location.pathname === "/goals"
-            ? "bg-indigo-600 text-white font-semibold shadow-md"
-            : "text-slate-700 hover:bg-slate-100"
-            }`}
-          >
-          Goals
-          </Link>
-
-          <Link
-            to="/github-analyzer"
-            className={`px-5 py-2 rounded-xl transition-all duration-300 ${
-            location.pathname === "/github-analyzer"
-            ? "bg-indigo-600 text-white font-semibold shadow-md"
-            : "text-slate-700 hover:bg-slate-100"
-            }`}
-          >
-  GitHub Analyzer
-</Link>
-
+              Logout
+            </button>
+          )}
         </div>
-
       </div>
-
     </nav>
   );
 }

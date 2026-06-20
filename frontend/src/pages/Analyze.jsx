@@ -197,7 +197,7 @@ function Analyze() {
 
     <button
       onClick={handleResumeUpload}
-      className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl font-semibold transition"
+      className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl font-semibold transition cursor-pointer active:scale-95"
     >
       Upload Resume
     </button>

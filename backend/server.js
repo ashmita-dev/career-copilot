@@ -14,10 +14,15 @@ const analysisHistoryRoutes = require(
 const careerGoalRoutes = require(
   "./routes/careerGoalRoutes"
 );
+const authRoutes = require(
+  "./routes/authRoutes"
+);
 const githubRoutes =
   require("./routes/githubRoutes");
 
 dotenv.config();
+
+
 
 const app = express();
 
@@ -42,6 +47,10 @@ app.use(
 app.use(
   "/api/github",
   githubRoutes
+);
+app.use(
+  "/api/auth",
+  authRoutes
 );
 
 app.get("/", (req, res) => {

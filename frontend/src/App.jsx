@@ -10,40 +10,88 @@ import Result from "./pages/Result";
 import History from "./pages/History";
 import Goals from "./pages/Goals";
 import GitHubAnalyzer from "./pages/GitHubAnalyzer";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import {
+  Navigate,
+} from "react-router-dom";
+
+import {
+  useAuth,
+} from "./context/AuthContext";
 
 function App() {
+
+  const { token } =
+  useAuth();
+
   return (
     <BrowserRouter>
       <Routes>
 
         <Route
           path="/"
-          element={<Home />}
+          element={
+          token
+          ? <Home />
+          : <Navigate to="/login" />
+          }
         />
 
         <Route
           path="/analyze"
-          element={<Analyze />}
+          element={
+            <ProtectedRoute>
+              <Analyze />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/result"
-          element={<Result />}
+          element={
+            <ProtectedRoute>
+              <Result />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/history"
-          element={<History />}
+          element={
+            <ProtectedRoute>
+              <History />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/goals"
-          element={<Goals />}
+          element={
+            <ProtectedRoute>
+              <Goals />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/github-analyzer"
-          element={<GitHubAnalyzer />}
+          element={
+            <ProtectedRoute>
+              <GitHubAnalyzer />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
         />
 
       </Routes>

@@ -152,7 +152,7 @@ const confirmDeleteGoal =
 
             <button
               onClick={handleCreateGoal}
-              className="mt-6 bg-indigo-600 hover:bg-indigo-700 px-8 py-3 rounded-xl font-semibold"
+              className="mt-6 bg-indigo-600 hover:bg-indigo-700 px-8 py-3 rounded-xl font-semibold cursor-pointer active:scale-95"
             >
               Save Goal
             </button>
