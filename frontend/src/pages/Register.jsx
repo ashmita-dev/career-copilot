@@ -20,6 +20,8 @@ import {
   EyeOff,
 } from "lucide-react";
 
+import { toast } from "react-toastify";
+
 function Register() {
   const { token } =
   useAuth();
@@ -36,6 +38,9 @@ function Register() {
   const [showPassword, setShowPassword] =
   useState(false);
 
+  const [loading, setLoading] =
+  useState(false);
+
   if (token) {
   return (
     <Navigate to="/" />
@@ -43,8 +48,40 @@ function Register() {
 }
 
   const handleRegister =
-  async () => {
-    try {
+async () => {
+  if (!name || !email || !password) {
+
+  toast.error(
+    "Please fill all fields"
+  );
+
+  return;
+}
+
+const emailRegex =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!emailRegex.test(email)) {
+
+  toast.error(
+    "Please enter a valid email"
+  );
+
+  return;
+}
+
+if (password.length < 6) {
+
+  toast.error(
+    "Password must be at least 6 characters"
+  );
+
+  return;
+}
+
+  setLoading(true);
+
+  try {
 
       const response =
         await registerUser({
@@ -53,18 +90,22 @@ function Register() {
           password,
         });
 
-      alert(
-        response.data.message ||
-          "Registration Successful"
-      );
+      toast.success(
+  response.data.message ||
+  "Registration Successful"
+);
+
+setLoading(false);
 
     } catch (error) {
 
-      alert(
-        error.response?.data
-          ?.message ||
-          "Registration Failed"
-      );
+      toast.error(
+  error.response?.data
+    ?.message ||
+    "Registration Failed"
+);
+
+setLoading(false);
 
     }
   };
@@ -227,6 +268,7 @@ function Register() {
 
         <button
   onClick={handleRegister}
+  disabled={loading}
   className="
     w-full
     bg-gradient-to-r
@@ -243,9 +285,13 @@ function Register() {
     duration-300
     hover:scale-[1.02]
     active:scale-95
+    disabled:opacity-60
+    disabled:cursor-not-allowed
   "
 >
-  Register
+  {loading
+  ? "Creating Account..."
+  : "Register"}
 </button> 
 
 <div className="flex items-center my-6">

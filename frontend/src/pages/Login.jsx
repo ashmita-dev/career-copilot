@@ -23,6 +23,8 @@ import {
   EyeOff,
 } from "lucide-react";
 
+import { toast } from "react-toastify";
+
 function Login() {
 
     const { token } = useAuth();
@@ -42,15 +44,49 @@ function Login() {
     const [showPassword, setShowPassword] =
     useState(false);
 
+    const [loading, setLoading] =
+    useState(false);
+
     const { login } = useAuth();
 
     const navigate = useNavigate();
 
     const handleLogin =
-  async () => {
+async () => {
 
-    try {
+  if (!email || !password) {
 
+    toast.error(
+      "Please fill all fields"
+    );
+
+    return;
+  }
+
+  const emailRegex =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!emailRegex.test(email)) {
+
+  toast.error(
+    "Please enter a valid email"
+  );
+
+  return;
+}
+
+if (password.length < 6) {
+
+  toast.error(
+    "Password must be at least 6 characters"
+  );
+
+  return;
+}
+
+  setLoading(true);
+
+  try {
       const response =
         await loginUser({
           email,
@@ -62,19 +98,23 @@ function Login() {
 
       login(token);
 
-      alert(
+      toast.success(
         "Login Successful"
       );
 
       navigate("/");
 
+      setLoading(false);
+
     } catch (error) {
 
-      alert(
-        error.response?.data
-          ?.message ||
-          "Login Failed"
-      );
+      toast.error(
+      error.response?.data
+      ?.message ||
+      "Login Failed"
+    );
+
+    setLoading(false);
 
     }
   };
@@ -206,9 +246,8 @@ function Login() {
 </div>
 
         <button
-        onClick={
-    handleLogin
-  }
+  onClick={handleLogin}
+  disabled={loading}
           className="
   w-full
   bg-gradient-to-r
@@ -225,9 +264,13 @@ function Login() {
   duration-300
   hover:scale-[1.02]
   active:scale-95
+  disabled:opacity-60
+  disabled:cursor-not-allowed
 "
         >
-          Login
+          {loading
+ ? "Logging In..."
+ : "Login"}
         </button>
 
         <div className="flex items-center my-6">
