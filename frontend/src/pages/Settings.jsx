@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import {
   changePassword,
   deleteAccount,
+  updateProfile,
 } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +11,7 @@ function Settings() {
   const navigate = useNavigate();
   const {
   user,
+  setUser,
   logout,
 } = useAuth();
 
@@ -24,6 +26,18 @@ const [newPassword,
 const [message,
   setMessage] =
   useState("");
+
+  const [editMode,
+setEditMode] =
+useState(false);
+
+const [name,
+setName] =
+useState(user?.name || "");
+
+const [email,
+setEmail] =
+useState(user?.email || "");
 
   const [showDeleteModal,
 setShowDeleteModal] =
@@ -81,6 +95,46 @@ async () => {
     );
 
   }
+};
+
+const handleUpdateProfile =
+async () => {
+
+  try {
+
+    const response =
+      await updateProfile({
+        name,
+        email,
+      });
+
+    const updatedUser = {
+  ...user,
+  name,
+  email,
+};
+
+localStorage.setItem(
+  "user",
+  JSON.stringify(updatedUser)
+);
+
+setUser(updatedUser);
+
+setMessage(
+  response.data.message
+);
+
+setEditMode(false);
+
+  } catch (error) {
+
+    setMessage(
+      error.response?.data?.message ||
+      "Failed to update profile"
+    );
+
+  }
 
 };
 
@@ -97,32 +151,137 @@ async () => {
         </p>
 
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-6">
-            Account Information
-          </h2>
 
-          <div className="space-y-4">
-            <div>
-              <p className="text-indigo-200 text-sm">
-                Full Name
-              </p>
+  <div className="flex justify-between items-center mb-6">
 
-              <p className="text-lg font-semibold">
-                {user?.name}
-              </p>
-            </div>
+    <h2 className="text-2xl font-bold">
+      Account Information
+    </h2>
 
-            <div>
-              <p className="text-indigo-200 text-sm">
-                Email Address
-              </p>
+    {!editMode && (
+      <button
+        onClick={() =>
+          setEditMode(true)
+        }
+        className="
+          bg-indigo-600
+          hover:bg-indigo-700
+          px-4 py-2
+          rounded-xl
+          font-semibold
+          transition
+          cursor-pointer
+        "
+      >
+        Edit Profile
+      </button>
+    )}
 
-              <p className="text-lg font-semibold">
-                {user?.email}
-              </p>
-            </div>
-          </div>
-        </div>
+  </div>
+
+  {editMode ? (
+
+    <div className="space-y-4">
+
+      <input
+        type="text"
+        value={name}
+        onChange={(e) =>
+          setName(e.target.value)
+        }
+        placeholder="Full Name"
+        className="
+          w-full
+          p-3
+          rounded-xl
+          bg-white/10
+          border
+          border-white/20
+        "
+      />
+
+      <input
+        type="email"
+        value={email}
+        onChange={(e) =>
+          setEmail(e.target.value)
+        }
+        placeholder="Email"
+        className="
+          w-full
+          p-3
+          rounded-xl
+          bg-white/10
+          border
+          border-white/20
+        "
+      />
+
+      <div className="flex gap-3">
+
+        <button
+          onClick={handleUpdateProfile}
+          className="
+            bg-green-600
+            hover:bg-green-700
+            px-5 py-2
+            rounded-xl
+            font-semibold
+            cursor-pointer
+          "
+        >
+          Save Changes
+        </button>
+
+        <button
+          onClick={() =>
+            setEditMode(false)
+          }
+          className="
+            bg-slate-600
+            hover:bg-slate-700
+            px-5 py-2
+            rounded-xl
+            font-semibold
+            cursor-pointer
+          "
+        >
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+  ) : (
+
+    <div className="space-y-4">
+
+      <div>
+        <p className="text-indigo-200 text-sm">
+          Full Name
+        </p>
+
+        <p className="text-lg font-semibold">
+          {user?.name}
+        </p>
+      </div>
+
+      <div>
+        <p className="text-indigo-200 text-sm">
+          Email Address
+        </p>
+
+        <p className="text-lg font-semibold">
+          {user?.email}
+        </p>
+      </div>
+
+    </div>
+
+  )}
+
+</div>
 
         <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
   <h2 className="text-2xl font-bold mb-6">

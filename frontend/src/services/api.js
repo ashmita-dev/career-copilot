@@ -102,3 +102,11 @@ export const changePassword = (
 
  export const deleteAccount = () =>
   API.delete("/settings/delete-account");
+
+ export const updateProfile = (
+  data
+) =>
+  API.put(
+    "/settings/update-profile",
+    data
+  );

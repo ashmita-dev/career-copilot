@@ -110,7 +110,56 @@ const deleteAccount = async (
 
 };
 
+const updateProfile = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const {
+      name,
+      email,
+    } = req.body;
+
+    const userId =
+      req.user.userId;
+
+    await db.query(
+      `
+      UPDATE auth_users
+      SET
+        name = $1,
+        email = $2
+      WHERE id = $3
+      `,
+      [
+        name,
+        email,
+        userId,
+      ]
+    );
+
+    res.status(200).json({
+      message:
+        "Profile updated successfully",
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message:
+        "Failed to update profile",
+    });
+
+  }
+
+};
+
 module.exports = {
   changePassword,
   deleteAccount,
+  updateProfile,
 };

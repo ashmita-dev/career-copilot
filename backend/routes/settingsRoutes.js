@@ -6,6 +6,7 @@ const router =
 const {
   changePassword,
   deleteAccount,
+  updateProfile,
 } = require(
   "../controllers/settingsController"
 );
@@ -25,6 +26,12 @@ router.delete(
   "/delete-account",
   authMiddleware,
   deleteAccount
+);
+
+router.put(
+  "/update-profile",
+  authMiddleware,
+  updateProfile
 );
 
 module.exports = router;

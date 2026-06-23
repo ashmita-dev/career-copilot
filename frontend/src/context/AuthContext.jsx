@@ -67,6 +67,7 @@ setUser(null);
       value={{
   token,
   user,
+  setUser,
   login,
   logout,
 }}
