@@ -94,9 +94,15 @@ if (password.length < 6) {
         });
 
       const token =
-        response.data.token;
+      response.data.token;
 
-      login(token);
+      const user =
+      response.data.user;
+
+      login(
+      token,
+      user
+    );
 
       toast.success(
         "Login Successful"

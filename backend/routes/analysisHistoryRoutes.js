@@ -6,10 +6,20 @@ const analysisHistoryModel = require(
   "../models/analysisHistoryModel"
 );
 
-router.get("/", async (req, res) => {
+const authMiddleware =
+  require("../middleware/authMiddleware");
+
+router.get(
+  "/",
+  authMiddleware,
+  async (req, res) => {
+    const userId =
+  req.user.userId;
   try {
     const history =
-      await analysisHistoryModel.getAnalysisHistory();
+  await analysisHistoryModel.getAnalysisHistory(
+    userId
+  );
 
     res.status(200).json(history);
   } catch (error) {
@@ -21,11 +31,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete(
+  "/:id",
+  authMiddleware,
+  async (req, res) => {
   try {
-    await analysisHistoryModel.deleteHistory(
-      req.params.id
-    );
+    const userId =
+  req.user.userId;
+
+await analysisHistoryModel.deleteHistory(
+  req.params.id,
+  userId
+);
 
     res.status(200).json({
       message: "Deleted",

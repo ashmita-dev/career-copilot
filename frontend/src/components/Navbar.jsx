@@ -3,7 +3,11 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const { token, logout } = useAuth();
+  const {
+  token,
+  user,
+  logout,
+} = useAuth();
 
   const navigate = useNavigate();
 
@@ -125,22 +129,49 @@ function Navbar() {
 )}
 
           {token && (
-            <button
-              onClick={handleLogout}
-              className="
-                px-4 py-2
-               bg-slate-800
-               hover:bg-slate-900
-               text-white  
-                rounded-xl
-                font-semibold
-                cursor-pointer
-                active:scale-95
-              "
-            >
-              Logout
-            </button>
-          )}
+  <div className="flex items-center gap-4">
+
+    <Link
+  to="/profile"
+  className="
+    flex items-center gap-3
+    px-4 py-2
+    rounded-2xl
+    hover:bg-slate-100
+    transition-all duration-300
+    cursor-pointer
+    hover:scale-105
+  "
+>
+  <div className="
+    w-10 h-10
+    rounded-full
+    bg-gradient-to-br
+    from-indigo-500
+    to-purple-600
+    flex items-center justify-center
+    text-white font-bold
+    shadow-md
+  ">
+    {user?.name?.charAt(0)?.toUpperCase()}
+  </div>
+
+  <div className="text-left">
+    <p className="text-xs text-slate-500">
+      View Profile
+    </p>
+
+    <p className="font-semibold text-slate-800 flex items-center gap-1">
+  {user?.name}
+  <span className="text-slate-500 text-xs">
+    ▼
+  </span>
+</p>
+  </div>
+</Link>
+
+  </div>
+)}
         </div>
       </div>
     </nav>

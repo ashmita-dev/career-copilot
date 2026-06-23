@@ -21,6 +21,8 @@ import {
   useAuth,
 } from "./context/AuthContext";
 
+import Profile from "./pages/Profile";
+
 function App() {
 
   const { token } =
@@ -80,6 +82,15 @@ function App() {
           element={
             <ProtectedRoute>
               <GitHubAnalyzer />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

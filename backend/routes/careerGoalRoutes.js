@@ -11,18 +11,24 @@ const {
   "../controllers/careerGoalController"
 );
 
+const authMiddleware =
+  require("../middleware/authMiddleware");
+
 router.post(
   "/",
+  authMiddleware,
   createGoal
 );
 
 router.get(
   "/",
+  authMiddleware,
   getGoals
 );
 
 router.delete(
   "/:id",
+  authMiddleware,
   deleteGoal
 );
 

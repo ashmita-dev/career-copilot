@@ -20,6 +20,10 @@ const authRoutes = require(
 const githubRoutes =
   require("./routes/githubRoutes");
 
+const roadmapHistoryRoutes = require(
+  "./routes/roadmapHistoryRoutes"
+);
+
 dotenv.config();
 
 
@@ -51,6 +55,11 @@ app.use(
 app.use(
   "/api/auth",
   authRoutes
+);
+
+app.use(
+  "/api/roadmap-history",
+  roadmapHistoryRoutes
 );
 
 app.get("/", (req, res) => {

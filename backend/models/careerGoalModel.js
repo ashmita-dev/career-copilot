@@ -2,22 +2,25 @@ const db = require("../config/db");
 
 const createGoal = async (
   roleId,
-  targetScore
+  targetScore,
+  userId
 ) => {
   const query = `
     INSERT INTO career_goals
-    (
-      role_id,
-      target_score
-    )
-    VALUES ($1, $2)
-    RETURNING *;
+(
+  role_id,
+  target_score,
+  user_id
+)
+VALUES ($1, $2, $3)
+RETURNING *;
   `;
 
   const values = [
-    roleId,
-    targetScore,
-  ];
+  roleId,
+  targetScore,
+  userId,
+];
 
   const result =
     await db.query(query, values);
@@ -25,7 +28,9 @@ const createGoal = async (
   return result.rows[0];
 };
 
-const getGoals = async () => {
+const getGoals = async (
+  userId
+) => {
   const query = `
     SELECT
   cg.*,
@@ -47,25 +52,38 @@ FROM career_goals cg
 JOIN roles r
 ON cg.role_id = r.id
 
-ORDER BY cg.created_at DESC`;
+WHERE cg.user_id = $1
+
+ORDER BY cg.created_at DESC
+`;
 
   const result =
-    await db.query(query);
+    await db.query(
+      query,
+      [userId]
+    );
 
   return result.rows;
 };
 
-const deleteGoal = async (id) => {
+const deleteGoal = async (
+  id,
+  userId
+) => {
   const query = `
     DELETE FROM career_goals
-    WHERE id = $1
-    RETURNING *;
+WHERE id = $1
+AND user_id = $2
+RETURNING *;
   `;
 
   const result = await db.query(
-    query,
-    [id]
-  );
+  query,
+  [
+    id,
+    userId,
+  ]
+);
 
   return result.rows[0];
 };

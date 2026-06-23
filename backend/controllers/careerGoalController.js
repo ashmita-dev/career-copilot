@@ -12,11 +12,15 @@ const createGoal = async (
       targetScore,
     } = req.body;
 
+    const userId =
+    req.user.userId;
+
     const goal =
-      await careerGoalModel.createGoal(
-        roleId,
-        targetScore
-      );
+  await careerGoalModel.createGoal(
+    roleId,
+    targetScore,
+    userId
+  );
 
     res.status(201).json(goal);
   } catch (error) {
@@ -33,8 +37,14 @@ const getGoals = async (
   res
 ) => {
   try {
+
+    const userId =
+      req.user.userId;
+
     const goals =
-      await careerGoalModel.getGoals();
+      await careerGoalModel.getGoals(
+        userId
+      );
 
     res.status(200).json(goals);
   } catch (error) {
@@ -51,11 +61,16 @@ const deleteGoal = async (
   res
 ) => {
   try {
+
     const { id } = req.params;
+
+    const userId =
+      req.user.userId;
 
     const deletedGoal =
       await careerGoalModel.deleteGoal(
-        id
+        id,
+        userId
       );
 
     res.status(200).json(

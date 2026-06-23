@@ -7,12 +7,22 @@ const githubHeaders = {
 };
 
 const router = express.Router();
+const githubReportModel = require(
+  "../models/githubReportModel"
+);
+
+const authMiddleware =
+  require("../middleware/authMiddleware");
 
 router.post(
   "/analyze",
+  authMiddleware,
   async (req, res) => {
     try {
       const { username } = req.body;
+
+      const userId =
+  req.user.userId;  
 
       const userResponse =
   await axios.get(
@@ -192,6 +202,12 @@ githubScore += 25;
 
 console.log(githubScore);
 
+await githubReportModel.saveGithubReport(
+  userId,
+  username,
+  githubScore
+);
+
    res.status(200).json({
   username:
     userResponse.data.login,
@@ -248,4 +264,34 @@ console.log(githubScore);
   }
 );
 
+router.get(
+  "/reports",
+  authMiddleware,
+  async (req, res) => {
+
+    try {
+
+      const userId =
+        req.user.userId;
+
+      const reports =
+        await githubReportModel.getGithubReports(
+          userId
+        );
+
+      res.status(200).json(
+        reports
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      res.status(500).json({
+        message: error.message,
+      });
+
+    }
+  }
+);
 module.exports = router;
