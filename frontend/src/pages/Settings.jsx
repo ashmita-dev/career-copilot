@@ -348,15 +348,6 @@ setEditMode(false);
 
   </div>
 </div>
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-6">
-            Preferences
-          </h2>
-
-          <p className="text-indigo-200">
-            Theme and notification settings coming soon.
-          </p>
-        </div>
 
         <div className="bg-red-500/10 border border-red-500/30 rounded-3xl p-8">
           <h2 className="text-2xl font-bold text-red-300 mb-6">
