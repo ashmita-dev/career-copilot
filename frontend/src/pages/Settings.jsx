@@ -2,10 +2,16 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import {
   changePassword,
+  deleteAccount,
 } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Settings() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const {
+  user,
+  logout,
+} = useAuth();
 
   const [currentPassword,
   setCurrentPassword] =
@@ -45,6 +51,42 @@ const [message,
     );
 
   }
+};
+
+const handleDeleteAccount =
+async () => {
+
+ const confirmDelete =
+  window.confirm(
+    "⚠️ This will permanently delete your account and cannot be undone. Continue?"
+  );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  try {
+
+    const response =
+      await deleteAccount();
+
+    alert(
+      response.data.message
+    );
+
+    logout();
+
+    navigate("/register");
+
+  } catch (error) {
+
+    alert(
+      error.response?.data?.message ||
+      "Failed to delete account"
+    );
+
+  }
+
 };
 
   return (
@@ -168,6 +210,7 @@ const [message,
           </h2>
 
           <button
+          onClick={handleDeleteAccount}
             className="
               bg-red-600
               hover:bg-red-700
@@ -175,6 +218,8 @@ const [message,
               rounded-xl
               font-semibold
               transition
+              cursor-pointer
+              active:scale-95
             "
           >
             Delete Account

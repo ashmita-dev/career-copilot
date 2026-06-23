@@ -99,3 +99,6 @@ export const changePassword = (
     "/settings/change-password",
     data
   );
+
+ export const deleteAccount = () =>
+  API.delete("/settings/delete-account");

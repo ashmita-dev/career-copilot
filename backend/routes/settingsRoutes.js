@@ -5,6 +5,7 @@ const router =
 
 const {
   changePassword,
+  deleteAccount,
 } = require(
   "../controllers/settingsController"
 );
@@ -18,6 +19,12 @@ router.put(
   "/change-password",
   authMiddleware,
   changePassword
+);
+
+router.delete(
+  "/delete-account",
+  authMiddleware,
+  deleteAccount
 );
 
 module.exports = router;

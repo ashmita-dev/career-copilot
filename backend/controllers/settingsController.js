@@ -74,6 +74,43 @@ const user =
   }
 };
 
+const deleteAccount = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const userId =
+      req.user.userId;
+
+    await db.query(
+      `
+      DELETE FROM auth_users
+      WHERE id = $1
+      `,
+      [userId]
+    );
+
+    res.status(200).json({
+      message:
+        "Account deleted successfully"
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message:
+        "Failed to delete account"
+    });
+
+  }
+
+};
+
 module.exports = {
   changePassword,
+  deleteAccount,
 };
