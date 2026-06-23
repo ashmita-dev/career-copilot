@@ -25,6 +25,10 @@ const [message,
   setMessage] =
   useState("");
 
+  const [showDeleteModal,
+setShowDeleteModal] =
+useState(false);
+
   const handleChangePassword =
   async () => {
 
@@ -55,15 +59,6 @@ const [message,
 
 const handleDeleteAccount =
 async () => {
-
- const confirmDelete =
-  window.confirm(
-    "⚠️ This will permanently delete your account and cannot be undone. Continue?"
-  );
-
-  if (!confirmDelete) {
-    return;
-  }
 
   try {
 
@@ -210,7 +205,9 @@ async () => {
           </h2>
 
           <button
-          onClick={handleDeleteAccount}
+          onClick={() =>
+          setShowDeleteModal(true)
+          }
             className="
               bg-red-600
               hover:bg-red-700
@@ -225,6 +222,82 @@ async () => {
             Delete Account
           </button>
         </div>
+
+        {showDeleteModal && (
+  <div
+    className="
+      fixed inset-0
+      bg-black/60
+      flex items-center justify-center
+      z-50
+    "
+  >
+    <div
+      className="
+        bg-slate-900
+        border border-red-500/30
+        rounded-3xl
+        p-8
+        w-[450px]
+        shadow-2xl
+      "
+    >
+      <h2
+        className="
+          text-3xl
+          font-bold
+          text-red-400
+          mb-4
+        "
+      >
+        Delete Account
+      </h2>
+
+      <p className="text-slate-300 mb-8">
+        This action cannot be undone.
+        All your goals, analyses,
+        GitHub reports and roadmap
+        history will be permanently
+        deleted.
+      </p>
+
+      <div className="flex justify-end gap-4">
+
+        <button
+          onClick={() =>
+            setShowDeleteModal(false)
+          }
+          className="
+            px-5 py-2
+            rounded-xl
+            bg-slate-700
+            hover:bg-slate-600
+          "
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+  setShowDeleteModal(false);
+  handleDeleteAccount();
+}}
+          className="
+            px-5 py-2
+            rounded-xl
+            bg-red-600
+            hover:bg-red-700
+            cursor-pointer
+            active:scale-95
+          "
+        >
+          Delete
+        </button>
+
+      </div>
+    </div>
+  </div>
+)}
 
       </div>
     </div>
