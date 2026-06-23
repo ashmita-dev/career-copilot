@@ -91,3 +91,11 @@ export const getGithubReports = () =>
 
 export const getRoadmapHistory = () =>
   API.get("/roadmap-history");
+
+export const changePassword = (
+  data
+) =>
+  API.put(
+    "/settings/change-password",
+    data
+  );

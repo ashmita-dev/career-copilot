@@ -23,6 +23,10 @@ const githubRoutes =
 const roadmapHistoryRoutes = require(
   "./routes/roadmapHistoryRoutes"
 );
+const settingsRoutes =
+  require(
+    "./routes/settingsRoutes"
+  );
 
 dotenv.config();
 
@@ -60,6 +64,11 @@ app.use(
 app.use(
   "/api/roadmap-history",
   roadmapHistoryRoutes
+);
+
+app.use(
+  "/api/settings",
+  settingsRoutes
 );
 
 app.get("/", (req, res) => {

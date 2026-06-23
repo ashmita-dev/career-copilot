@@ -23,6 +23,8 @@ import {
 
 import Profile from "./pages/Profile";
 
+import Settings from "./pages/Settings";
+
 function App() {
 
   const { token } =
@@ -93,6 +95,11 @@ function App() {
               <Profile />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
         />
 
         <Route
