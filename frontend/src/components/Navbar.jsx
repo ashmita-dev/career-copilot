@@ -1,4 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+} from "react-router-dom";
+
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +15,8 @@ function Navbar() {
 } = useAuth();
 
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] =
+  useState(false);  
 
   const handleLogout = () => {
     logout();
@@ -128,11 +135,13 @@ function Navbar() {
   </>
 )}
 
-          {token && (
-  <div className="flex items-center gap-4">
+         {token && (
+  <div className="flex items-center gap-4 relative">
 
-    <Link
-  to="/profile"
+   <div
+   onClick={() =>
+  setShowMenu(!showMenu)
+}
   className="
     flex items-center gap-3
     px-4 py-2
@@ -143,7 +152,8 @@ function Navbar() {
     hover:scale-105
   "
 >
-  <div className="
+  <div
+   className="
     w-10 h-10
     rounded-full
     bg-gradient-to-br
@@ -168,8 +178,74 @@ function Navbar() {
   </span>
 </p>
   </div>
-</Link>
+</div>
+{showMenu && (
+  <div
+    className="
+      absolute
+      top-20
+      right-6
+      w-52
+      bg-white
+      rounded-2xl
+      shadow-2xl
+      border
+      border-slate-200
+      overflow-hidden
+      z-50
+    "
+  >
+    <Link
+      to="/profile"
+      className="
+        block
+        px-5
+        py-3
+        hover:bg-slate-100
+        transition
+      "
+      onClick={() =>
+        setShowMenu(false)
+      }
+    >
+      👤 Profile
+    </Link>
 
+    <Link
+      to="/settings"
+      className="
+        block
+        px-5
+        py-3
+        hover:bg-slate-100
+        transition
+      "
+      onClick={() =>
+        setShowMenu(false)
+      }
+    >
+      ⚙️ Settings
+    </Link>
+
+    <button
+      onClick={() => {
+        setShowMenu(false);
+        handleLogout();
+      }}
+      className="
+        w-full
+        text-left
+        px-5
+        py-3
+        hover:bg-red-50
+        text-red-600
+        transition
+      "
+    >
+      🚪 Logout
+    </button>
+  </div>
+)}
   </div>
 )}
         </div>
