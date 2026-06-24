@@ -40,91 +40,91 @@ function Result() {
   }
 
   const downloadPDF = () => {
-  const pdf = new jsPDF();
+    const pdf = new jsPDF();
 
-  pdf.setFontSize(22);
-  pdf.text("Career Copilot Report", 20, 20);
+    pdf.setFontSize(22);
+    pdf.text("Career Copilot Report", 20, 20);
 
-  pdf.setFontSize(14);
-  pdf.text(
-    `Match Score: ${analysis.matchPercentage.toFixed(1)}%`,
-    20,
-    40
-  );
-
-  pdf.text(
-    `Readiness Level: ${analysis.readinessLevel}`,
-    20,
-    50
-  );
-
-  pdf.text(
-    `Learning Time: ${analysis.learningTime}`,
-    20,
-    60
-  );
-
-  pdf.text(
-    `Matched Skills: ${analysis.matchedSkills}`,
-    20,
-    70
-  );
-
-  pdf.text(
-    `Missing Skills: ${analysis.missingSkills.length}`,
-    20,
-    80
-  );
-
-  let y = 100;
-
-  pdf.setFontSize(16);
-  pdf.text("Missing Skills", 20, y);
-
-  y += 10;
-
-  analysis.missingSkills.forEach((skill) => {
-    pdf.setFontSize(12);
-    pdf.text(`• ${skill}`, 25, y);
-    y += 8;
-  });
-
-  y += 10;
-
-  pdf.setFontSize(16);
-  pdf.text("Recommended Projects", 20, y);
-
-  y += 10;
-
-  projects.forEach((project) => {
-    pdf.setFontSize(12);
+    pdf.setFontSize(14);
     pdf.text(
-      `• ${project.project_name}`,
-      25,
-      y
+      `Match Score: ${analysis.matchPercentage.toFixed(1)}%`,
+      20,
+      40
     );
-    y += 8;
-  });
 
-  y += 10;
-
-  pdf.setFontSize(16);
-  pdf.text("Learning Roadmap", 20, y);
-
-  y += 10;
-
-  roadmap.forEach((item) => {
-    pdf.setFontSize(12);
     pdf.text(
-      `Month ${item.month_number}: ${item.topic}`,
-      25,
-      y
+      `Readiness Level: ${analysis.readinessLevel}`,
+      20,
+      50
     );
-    y += 8;
-  });
 
-  pdf.save("Career_Report.pdf");
-};
+    pdf.text(
+      `Learning Time: ${analysis.learningTime}`,
+      20,
+      60
+    );
+
+    pdf.text(
+      `Matched Skills: ${analysis.matchedSkills}`,
+      20,
+      70
+    );
+
+    pdf.text(
+      `Missing Skills: ${analysis.missingSkills.length}`,
+      20,
+      80
+    );
+
+    let y = 100;
+
+    pdf.setFontSize(16);
+    pdf.text("Missing Skills", 20, y);
+
+    y += 10;
+
+    analysis.missingSkills.forEach((skill) => {
+      pdf.setFontSize(12);
+      pdf.text(`• ${skill}`, 25, y);
+      y += 8;
+    });
+
+    y += 10;
+
+    pdf.setFontSize(16);
+    pdf.text("Recommended Projects", 20, y);
+
+    y += 10;
+
+    projects.forEach((project) => {
+      pdf.setFontSize(12);
+      pdf.text(
+        `• ${project.project_name}`,
+        25,
+        y
+      );
+      y += 8;
+    });
+
+    y += 10;
+
+    pdf.setFontSize(16);
+    pdf.text("Learning Roadmap", 20, y);
+
+    y += 10;
+
+    roadmap.forEach((item) => {
+      pdf.setFontSize(12);
+      pdf.text(
+        `Month ${item.month_number}: ${item.topic}`,
+        25,
+        y
+      );
+      y += 8;
+    });
+
+    pdf.save("Career_Report.pdf");
+  };
 
   const score = analysis.matchPercentage;
 
@@ -153,17 +153,14 @@ function Result() {
       <Navbar />
 
       <div
-  className="min-h-screen text-white"
-  style={{
-    background:
-      "linear-gradient(135deg, #1e1b4b, #0f172a, #3b0764)",
-  }}
->
-
+        className="min-h-screen text-white"
+        style={{
+          background:
+            "linear-gradient(135deg, #1e1b4b, #0f172a, #3b0764)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-6 py-16">
-
           <div className="text-center mb-14">
-
             <div className="inline-block px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-6">
               📊 AI Career Analysis Report
             </div>
@@ -178,13 +175,10 @@ function Result() {
             <p className="text-xl text-indigo-200">
               Personalized insights for your target career path.
             </p>
-
           </div>
 
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-10 mb-8">
-
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-
               <div>
                 <h2 className="text-3xl font-bold mb-2">
                   Match Score
@@ -198,24 +192,19 @@ function Result() {
               <div className="text-6xl font-extrabold">
                 {score.toFixed(1)}%
               </div>
-
             </div>
 
             <div className="mt-8 w-full bg-white/10 rounded-full h-6 overflow-hidden">
-
               <div
                 className={`bg-gradient-to-r ${scoreColor} h-6 rounded-full transition-all duration-1000`}
                 style={{
                   width: `${score}%`,
                 }}
               />
-
             </div>
-
           </div>
 
           <div className="grid md:grid-cols-4 gap-6 mb-8">
-
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
               <p className="text-indigo-300 text-sm">
                 Readiness Level
@@ -255,11 +244,9 @@ function Result() {
                 {analysis.learningTime}
               </h3>
             </div>
-
           </div>
 
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-8">
-
             <h2 className="text-3xl font-bold mb-4">
               🤖 AI Career Insights
             </h2>
@@ -267,22 +254,18 @@ function Result() {
             <p className="text-indigo-200 leading-8 text-lg">
               {analysis.recommendation}
             </p>
-
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-
               <h2 className="text-2xl font-bold mb-6">
                 Missing Skills
               </h2>
 
               <div className="flex flex-wrap gap-3">
-
                 {analysis.missingSkills.length === 0 ? (
                   <span className="bg-green-500 px-4 py-2 rounded-full">
-                     No Missing Skills
+                    No Missing Skills
                   </span>
                 ) : (
                   analysis.missingSkills.map(
@@ -296,19 +279,15 @@ function Result() {
                     )
                   )
                 )}
-
               </div>
-
             </div>
 
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-
               <h2 className="text-2xl font-bold mb-6">
                 Recommended Projects
               </h2>
 
               <div className="space-y-4">
-
                 {projects.map(
                   (project, index) => (
                     <div
@@ -316,26 +295,21 @@ function Result() {
                       className="bg-white/5 rounded-2xl p-4"
                     >
                       <div className="font-semibold text-lg">
-                         {project.project_name}
+                        {project.project_name}
                       </div>
                     </div>
                   )
                 )}
-
               </div>
-
             </div>
-
           </div>
 
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mt-8">
-
             <h2 className="text-3xl font-bold mb-8">
               Learning Roadmap
             </h2>
 
             <div className="space-y-6">
-
               {roadmap.map((item, index) => (
                 <div
                   key={index}
@@ -356,31 +330,25 @@ function Result() {
                   </div>
                 </div>
               ))}
-
             </div>
-
           </div>
 
           <div className="text-center mt-12 flex flex-col md:flex-row justify-center gap-4">
+            <button
+              onClick={downloadPDF}
+              className="bg-indigo-500 hover:bg-indigo-600 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
+            >
+              Download PDF Report
+            </button>
 
-  <button
-    onClick={downloadPDF}
-    className="bg-indigo-500 hover:bg-indigo-600 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
-  >
-    Download PDF Report
-  </button>
-
-  <button
-    onClick={() => navigate("/analyze")}
-    className="bg-white text-indigo-900 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
-  >
-    Analyze Another Role →
-  </button>
-
-</div>
-
+            <button
+              onClick={() => navigate("/analyze")}
+              className="bg-white text-indigo-900 hover:scale-105 px-10 py-4 rounded-2xl text-lg font-bold transition"
+            >
+              Analyze Another Role →
+            </button>
+          </div>
         </div>
-
       </div>
     </>
   );

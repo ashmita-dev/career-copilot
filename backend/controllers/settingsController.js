@@ -15,22 +15,22 @@ const changePassword = async (
       req.user.userId;
 
     console.log("REQ.USER:", req.user);
-console.log("USER ID:", userId);
+    console.log("USER ID:", userId);
 
-  const userResult =
-  await db.query(
-    `
+    const userResult =
+      await db.query(
+        `
     SELECT *
     FROM auth_users
     WHERE id = $1
     `,
-    [userId]
-  );
+        [userId]
+      );
 
-console.log(userResult.rows);
+    console.log(userResult.rows);
 
-const user =
-  userResult.rows[0];
+    const user =
+      userResult.rows[0];
 
     const isMatch =
       await bcrypt.compare(
@@ -52,19 +52,18 @@ const user =
       );
 
     await db.query(
-  `
+      `
   UPDATE auth_users
   SET password = $1
   WHERE id = $2
   `,
-  [hashedPassword, userId]
-);
+      [hashedPassword, userId]
+    );
 
     res.status(200).json({
       message:
         "Password updated successfully",
     });
-
   } catch (error) {
     console.error(error);
 
@@ -78,9 +77,7 @@ const deleteAccount = async (
   req,
   res
 ) => {
-
   try {
-
     const userId =
       req.user.userId;
 
@@ -94,29 +91,23 @@ const deleteAccount = async (
 
     res.status(200).json({
       message:
-        "Account deleted successfully"
+        "Account deleted successfully",
     });
-
   } catch (error) {
-
     console.error(error);
 
     res.status(500).json({
       message:
-        "Failed to delete account"
+        "Failed to delete account",
     });
-
   }
-
 };
 
 const updateProfile = async (
   req,
   res
 ) => {
-
   try {
-
     const {
       name,
       email,
@@ -144,18 +135,14 @@ const updateProfile = async (
       message:
         "Profile updated successfully",
     });
-
   } catch (error) {
-
     console.error(error);
 
     res.status(500).json({
       message:
         "Failed to update profile",
     });
-
   }
-
 };
 
 module.exports = {

@@ -21,12 +21,12 @@ RETURNING *;
   `;
 
   const values = [
-  roleId,
-  matchPercentage,
-  readinessLevel,
-  learningTime,
-  userId,
-];
+    roleId,
+    matchPercentage,
+    readinessLevel,
+    learningTime,
+    userId,
+  ];
 
   const result =
     await db.query(query, values);
@@ -35,7 +35,7 @@ RETURNING *;
 };
 
 const getAnalysisHistory =
-  async (userId) => { 
+  async (userId) => {
     const query = `
       SELECT
   ah.*,
@@ -50,15 +50,15 @@ ORDER BY ah.created_at DESC;
     `;
 
     const result =
-  await db.query(
-    query,
-    [userId]
-  );
+      await db.query(
+        query,
+        [userId]
+      );
 
     return result.rows;
   };
 
-  const deleteHistory = async (
+const deleteHistory = async (
   id,
   userId
 ) => {
@@ -69,12 +69,12 @@ AND user_id = $2
   `;
 
   await db.query(
-  query,
-  [
-    id,
-    userId
-  ]
-);
+    query,
+    [
+      id,
+      userId
+    ]
+  );
 };
 
 module.exports = {

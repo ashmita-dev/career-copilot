@@ -4,7 +4,6 @@ const saveRoadmapHistory = async (
   userId,
   roleId
 ) => {
-
   const query = `
     INSERT INTO roadmap_history
     (
@@ -26,7 +25,6 @@ const saveRoadmapHistory = async (
 
 const getRoadmapHistory =
   async (userId) => {
-
     const query = `
       SELECT *
       FROM roadmap_history
@@ -41,7 +39,7 @@ const getRoadmapHistory =
       );
 
     return result.rows;
-};
+  };
 
 module.exports = {
   saveRoadmapHistory,

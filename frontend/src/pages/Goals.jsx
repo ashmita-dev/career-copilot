@@ -15,10 +15,10 @@ function Goals() {
   const [targetScore, setTargetScore] =
     useState("");
   const [showDeleteModal, setShowDeleteModal] =
-  useState(false);
+    useState(false);
 
   const [goalToDelete, setGoalToDelete] =
-  useState(null);
+    useState(null);
 
   useEffect(() => {
     fetchRoles();
@@ -65,53 +65,49 @@ function Goals() {
   };
 
   const handleDeleteGoal = (
-  id
-) => {
-  setGoalToDelete(id);
-  setShowDeleteModal(true);
-};
-
-const confirmDeleteGoal =
-  async () => {
-    try {
-      await deleteGoal(
-        goalToDelete
-      );
-
-      fetchGoals();
-
-      setShowDeleteModal(
-        false
-      );
-
-      setGoalToDelete(
-        null
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    id
+  ) => {
+    setGoalToDelete(id);
+    setShowDeleteModal(true);
   };
+
+  const confirmDeleteGoal =
+    async () => {
+      try {
+        await deleteGoal(
+          goalToDelete
+        );
+
+        fetchGoals();
+
+        setShowDeleteModal(
+          false
+        );
+
+        setGoalToDelete(
+          null
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <>
       <Navbar />
 
       <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white">
-
         <div className="max-w-6xl mx-auto px-6 py-16">
-
           <h1 className="text-5xl font-bold mb-10">
             Career Goals
           </h1>
 
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-10">
-
             <h2 className="text-2xl font-bold mb-6">
               Set New Goal
             </h2>
 
             <div className="grid md:grid-cols-2 gap-4">
-
               <select
                 value={selectedRole}
                 onChange={(e) =>
@@ -147,7 +143,6 @@ const confirmDeleteGoal =
                 }
                 className="p-4 rounded-xl bg-white/10 border border-white/20"
               />
-
             </div>
 
             <button
@@ -156,143 +151,129 @@ const confirmDeleteGoal =
             >
               Save Goal
             </button>
-
           </div>
 
           <div className="space-y-6">
+            {goals.map((goal) => {
+              const progress = Math.min(
+                ((goal.current_score || 0) /
+                  goal.target_score) *
+                  100,
+                100
+              );
 
-           {goals.map((goal) => {
-  const progress = Math.min(
-    ((goal.current_score || 0) /
-      goal.target_score) *
-      100,
-    100
-  );
+              const achieved =
+                (goal.current_score || 0) >=
+                goal.target_score;
 
-  const achieved =
-    (goal.current_score || 0) >=
-    goal.target_score;
+              return (
+                <div
+                  key={goal.id}
+                  className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <h2 className="text-2xl font-bold">
+                          {goal.role_name}
+                        </h2>
+                      </div>
 
-  return (
-    <div
-      key={goal.id}
-      className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6"
-    >
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <div className="flex justify-between items-start">
+                      <p className="text-indigo-200 mt-2">
+                        Target Score: {goal.target_score}%
+                      </p>
 
-  <h2 className="text-2xl font-bold">
-    {goal.role_name}
-  </h2>
+                      <p className="text-indigo-200">
+                        Current Score:{" "}
+                        {Number(
+                          goal.current_score || 0
+                        ).toFixed(1)}
+                        %
+                      </p>
+                    </div>
 
-</div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() =>
+                          handleDeleteGoal(goal.id)
+                        }
+                        className="text-red-400 hover:text-red-300 text-xl transition cursor-pointer active:scale-95"
+                      >
+                        🗑️
+                      </button>
 
-          <p className="text-indigo-200 mt-2">
-            Target Score: {goal.target_score}%
-          </p>
+                      {achieved ? (
+                        <span className="bg-green-500 px-4 py-2 rounded-full font-semibold">
+                          🏆 Goal Achieved
+                        </span>
+                      ) : (
+                        <span className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold">
+                          In Progress
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-          <p className="text-indigo-200">
-            Current Score:{" "}
-            {Number(
-              goal.current_score || 0
-            ).toFixed(1)}
-            %
-          </p>
-        </div>
+                  <div className="w-full h-4 bg-white/10 rounded-full overflow-hidden mb-3">
+                    <div
+                      className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                      style={{
+                        width: `${progress}%`,
+                      }}
+                    />
+                  </div>
 
-        <div className="flex items-center gap-3">
+                  <p className="text-indigo-300">
+                    Progress: {progress.toFixed(0)}%
+                  </p>
 
-  <button
-    onClick={() =>
-      handleDeleteGoal(goal.id)
-    }
-    className="text-red-400 hover:text-red-300 text-xl transition cursor-pointer active:scale-95"
-  >
-    🗑️
-  </button>
-
-  {achieved ? (
-    <span className="bg-green-500 px-4 py-2 rounded-full font-semibold">
-      🏆 Goal Achieved
-    </span>
-  ) : (
-    <span className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold">
-      In Progress
-    </span>
-  )}
-
-</div>
-      </div>
-
-      <div className="w-full h-4 bg-white/10 rounded-full overflow-hidden mb-3">
-        <div
-          className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
-          style={{
-            width: `${progress}%`,
-          }}
-        />
-      </div>
-
-      <p className="text-indigo-300">
-        Progress: {progress.toFixed(0)}%
-      </p>
-
-      <p className="text-indigo-400 text-sm mt-3">
-        {new Date(
-          goal.created_at
-        ).toLocaleString()}
-      </p>
-    </div>
-  );
-})}
-
+                  <p className="text-indigo-400 text-sm mt-3">
+                    {new Date(
+                      goal.created_at
+                    ).toLocaleString()}
+                  </p>
+                </div>
+              );
+            })}
           </div>
-
         </div>
-
       </div>
+
       {showDeleteModal && (
-  <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-[450px]">
+            <h2 className="text-2xl font-bold mb-4">
+              Delete Goal
+            </h2>
 
-    <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-[450px]">
+            <p className="text-indigo-200 mb-6">
+              Are you sure you want to delete this goal?
+            </p>
 
-      <h2 className="text-2xl font-bold mb-4">
-        Delete Goal
-      </h2>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() =>
+                  setShowDeleteModal(
+                    false
+                  )
+                }
+                className="px-5 py-2 rounded-xl bg-white/10"
+              >
+                Cancel
+              </button>
 
-      <p className="text-indigo-200 mb-6">
-        Are you sure you want to delete this goal?
-      </p>
-
-      <div className="flex justify-end gap-3">
-
-        <button
-          onClick={() =>
-            setShowDeleteModal(
-              false
-            )
-          }
-          className="px-5 py-2 rounded-xl bg-white/10"
-        >
-          Cancel
-        </button>
-
-        <button
-          onClick={
-            confirmDeleteGoal
-          }
-          className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 cursor-pointer active:scale-95"
-        >
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-)}
+              <button
+                onClick={
+                  confirmDeleteGoal
+                }
+                className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 cursor-pointer active:scale-95"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

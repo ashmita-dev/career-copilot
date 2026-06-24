@@ -10,7 +10,6 @@ const AuthContext =
 export const AuthProvider = ({
   children,
 }) => {
-
   const [token, setToken] =
     useState(
       localStorage.getItem(
@@ -18,59 +17,57 @@ export const AuthProvider = ({
       )
     );
 
-    const [user, setUser] =
-  useState(
-    JSON.parse(
-      localStorage.getItem(
-        "user"
-      )
-    ) || null
-  );
+  const [user, setUser] =
+    useState(
+      JSON.parse(
+        localStorage.getItem(
+          "user"
+        )
+      ) || null
+    );
 
- const login = (
-  jwtToken,
-  userData
-) => {
+  const login = (
+    jwtToken,
+    userData
+  ) => {
+    localStorage.setItem(
+      "token",
+      jwtToken
+    );
 
     localStorage.setItem(
-  "token",
-  jwtToken
-);
+      "user",
+      JSON.stringify(userData)
+    );
 
-localStorage.setItem(
-  "user",
-  JSON.stringify(userData)
-);
+    setToken(jwtToken);
 
-setToken(jwtToken);
-
-setUser(userData);
+    setUser(userData);
   };
 
   const logout = () => {
+    localStorage.removeItem(
+      "token"
+    );
 
     localStorage.removeItem(
-  "token"
-);
+      "user"
+    );
 
-localStorage.removeItem(
-  "user"
-);
+    setToken(null);
 
-setToken(null);
-
-setUser(null);
+    setUser(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
-  token,
-  user,
-  setUser,
-  login,
-  logout,
-}}
+        token,
+        user,
+        setUser,
+        login,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

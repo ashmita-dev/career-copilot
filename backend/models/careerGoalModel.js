@@ -17,10 +17,10 @@ RETURNING *;
   `;
 
   const values = [
-  roleId,
-  targetScore,
-  userId,
-];
+    roleId,
+    targetScore,
+    userId,
+  ];
 
   const result =
     await db.query(query, values);
@@ -78,12 +78,12 @@ RETURNING *;
   `;
 
   const result = await db.query(
-  query,
-  [
-    id,
-    userId,
-  ]
-);
+    query,
+    [
+      id,
+      userId,
+    ]
+  );
 
   return result.rows[0];
 };

@@ -13,14 +13,14 @@ const createGoal = async (
     } = req.body;
 
     const userId =
-    req.user.userId;
+      req.user.userId;
 
     const goal =
-  await careerGoalModel.createGoal(
-    roleId,
-    targetScore,
-    userId
-  );
+      await careerGoalModel.createGoal(
+        roleId,
+        targetScore,
+        userId
+      );
 
     res.status(201).json(goal);
   } catch (error) {
@@ -37,7 +37,6 @@ const getGoals = async (
   res
 ) => {
   try {
-
     const userId =
       req.user.userId;
 
@@ -61,7 +60,6 @@ const deleteGoal = async (
   res
 ) => {
   try {
-
     const { id } = req.params;
 
     const userId =

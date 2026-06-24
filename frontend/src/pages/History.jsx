@@ -17,37 +17,38 @@ import {
 function History() {
   const [history, setHistory] = useState([]);
   const [showDeleteModal, setShowDeleteModal] =
-  useState(false);
+    useState(false);
 
   const [selectedHistoryId, setSelectedHistoryId] =
-  useState(null);   
+    useState(null);
+
   const totalAnalyses = history.length;
 
-const highestScore =
-  history.length > 0
-    ? Math.max(
-        ...history.map(
-          (item) =>
-            Number(
-              item.match_percentage
-            )
+  const highestScore =
+    history.length > 0
+      ? Math.max(
+          ...history.map(
+            (item) =>
+              Number(
+                item.match_percentage
+              )
+          )
         )
-      )
-    : 0;
+      : 0;
 
-const averageScore =
-  history.length > 0
-    ? (
-        history.reduce(
-          (sum, item) =>
-            sum +
-            Number(
-              item.match_percentage
-            ),
-          0
-        ) / history.length
-      ).toFixed(1)
-    : 0;
+  const averageScore =
+    history.length > 0
+      ? (
+          history.reduce(
+            (sum, item) =>
+              sum +
+              Number(
+                item.match_percentage
+              ),
+            0
+          ) / history.length
+        ).toFixed(1)
+      : 0;
 
   useEffect(() => {
     fetchHistory();
@@ -64,136 +65,123 @@ const averageScore =
     }
   };
 
- const handleDeleteHistory =
-  async () => {
-    try {
-      await deleteHistory(
-        selectedHistoryId
-      );
+  const handleDeleteHistory =
+    async () => {
+      try {
+        await deleteHistory(
+          selectedHistoryId
+        );
 
-      fetchHistory();
+        fetchHistory();
 
-      setShowDeleteModal(false);
+        setShowDeleteModal(false);
 
-      setSelectedHistoryId(null);
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
+        setSelectedHistoryId(null);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <>
       <Navbar />
 
       <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white">
-
         <div className="max-w-6xl mx-auto px-6 py-16">
-
           <h1 className="text-5xl font-bold mb-10">
             Analysis History
           </h1>
 
           <div className="grid md:grid-cols-3 gap-6 mb-10">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300">
+                Total Analyses
+              </p>
 
-  <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
-    <p className="text-indigo-300">
-      Total Analyses
-    </p>
+              <h2 className="text-4xl font-bold mt-2">
+                {totalAnalyses}
+              </h2>
+            </div>
 
-    <h2 className="text-4xl font-bold mt-2">
-      {totalAnalyses}
-    </h2>
-  </div>
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300">
+                Highest Score
+              </p>
 
-  <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
-    <p className="text-indigo-300">
-      Highest Score
-    </p>
+              <h2 className="text-4xl font-bold mt-2">
+                {highestScore.toFixed(1)}%
+              </h2>
+            </div>
 
-    <h2 className="text-4xl font-bold mt-2">
-      {highestScore.toFixed(1)}%
-    </h2>
-  </div>
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
+              <p className="text-indigo-300">
+                Average Score
+              </p>
 
-  <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center">
-    <p className="text-indigo-300">
-      Average Score
-    </p>
+              <h2 className="text-4xl font-bold mt-2">
+                {averageScore}%
+              </h2>
+            </div>
+          </div>
 
-    <h2 className="text-4xl font-bold mt-2">
-      {averageScore}%
-    </h2>
-  </div>
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-10">
+            <h2 className="text-2xl font-bold mb-6">
+              Progress Trend
+            </h2>
 
-</div>
+            <div className="h-80">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+                <LineChart data={history}>
+                  <CartesianGrid strokeDasharray="3 3" />
 
-<div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 mb-10">
+                  <XAxis
+                    dataKey="id"
+                  />
 
-  <h2 className="text-2xl font-bold mb-6">
-    Progress Trend
-  </h2>
+                  <YAxis />
 
-  <div className="h-80">
+                  <Tooltip />
 
-    <ResponsiveContainer
-      width="100%"
-      height="100%"
-    >
-      <LineChart data={history}>
+                  <Line
+                    type="monotone"
+                    dataKey="match_percentage"
+                    stroke="#818cf8"
+                    strokeWidth={3}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
-        <CartesianGrid strokeDasharray="3 3" />
-
-        <XAxis
-          dataKey="id"
-        />
-
-        <YAxis />
-
-        <Tooltip />
-
-        <Line
-          type="monotone"
-          dataKey="match_percentage"
-          stroke="#818cf8"
-          strokeWidth={3}
-        />
-
-      </LineChart>
-    </ResponsiveContainer>
-
-  </div>
-
-</div>
           <div className="space-y-6">
-
             {history.map((item) => (
               <div
                 key={item.id}
                 className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6"
               >
                 <div className="flex justify-between items-start">
+                  <h2 className="text-2xl font-bold">
+                    {item.role_name}
+                  </h2>
 
-  <h2 className="text-2xl font-bold">
-    {item.role_name}
-  </h2>
+                  <button
+                    onClick={() => {
+                      setSelectedHistoryId(
+                        item.id
+                      );
 
-  <button
-    onClick={() => {
-  setSelectedHistoryId(
-    item.id
-  );
-
-  setShowDeleteModal(
-    true
-  );
-}}
-    className="text-red-400 hover:text-red-300 text-xl transition cursor-pointer active:scale-95"
-  >
-    🗑️
-  </button>
-
-</div>
+                      setShowDeleteModal(
+                        true
+                      );
+                    }}
+                    className="text-red-400 hover:text-red-300 text-xl transition cursor-pointer active:scale-95"
+                  >
+                    🗑️
+                  </button>
+                </div>
 
                 <p className="text-indigo-200 mt-2">
                   Match Score:
@@ -223,17 +211,13 @@ const averageScore =
                 </p>
               </div>
             ))}
-
           </div>
-
         </div>
-
       </div>
-       {showDeleteModal && (
+
+      {showDeleteModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-
           <div className="bg-slate-900 border border-white/20 rounded-3xl p-8 w-[420px] shadow-2xl">
-
             <h2 className="text-2xl font-bold mb-4">
               Delete Analysis
             </h2>
@@ -244,11 +228,10 @@ const averageScore =
             </p>
 
             <div className="flex justify-end gap-4">
-
               <button
                 onClick={() => {
-                setShowDeleteModal(false);
-                setSelectedHistoryId(null);
+                  setShowDeleteModal(false);
+                  setSelectedHistoryId(null);
                 }}
                 className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition"
               >
@@ -261,14 +244,10 @@ const averageScore =
               >
                 Delete
               </button>
-
             </div>
-
           </div>
-
-        </div>  
+        </div>
       )}
-      
     </>
   );
 }

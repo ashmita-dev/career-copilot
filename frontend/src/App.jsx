@@ -26,20 +26,18 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 
 function App() {
-
   const { token } =
-  useAuth();
+    useAuth();
 
   return (
     <BrowserRouter>
       <Routes>
-
         <Route
           path="/"
           element={
-          token
-          ? <Home />
-          : <Navigate to="/login" />
+            token
+              ? <Home />
+              : <Navigate to="/login" />
           }
         />
 
@@ -111,7 +109,6 @@ function App() {
           path="/register"
           element={<Register />}
         />
-
       </Routes>
     </BrowserRouter>
   );

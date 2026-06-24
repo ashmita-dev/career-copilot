@@ -14,12 +14,13 @@ ReactDOM.createRoot(
 ).render(
   <React.StrictMode>
     <AuthProvider>
-  <App />
-  <ToastContainer
-    position="top-right"
-    autoClose={3000}
-    theme="dark"
-  />
-</AuthProvider>
+      <App />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="dark"
+      />
+    </AuthProvider>
   </React.StrictMode>
 );

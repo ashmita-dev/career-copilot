@@ -6,17 +6,14 @@ const API = axios.create({
 
 API.interceptors.request.use(
   (config) => {
-
     const token =
       localStorage.getItem(
         "token"
       );
 
     if (token) {
-
       config.headers.Authorization =
         `Bearer ${token}`;
-
     }
 
     return config;
@@ -48,29 +45,29 @@ export const uploadResume = (formData) =>
     },
   });
 
-  export const getAnalysisHistory = () =>
+export const getAnalysisHistory = () =>
   API.get("/analysis-history");
 
-  export const deleteHistory = (id) =>
+export const deleteHistory = (id) =>
   API.delete(
     `/analysis-history/${id}`
   );
 
-  export const createGoal = (data) =>
+export const createGoal = (data) =>
   API.post("/goals", data);
 
-  export const getGoals = () =>
+export const getGoals = () =>
   API.get("/goals");
 
-  export const deleteGoal = (id) =>
+export const deleteGoal = (id) =>
   API.delete(`/goals/${id}`);
 
-  export const analyzeGitHub = (username) =>
+export const analyzeGitHub = (username) =>
   API.post("/github/analyze", {
     username,
   });
 
-  export const registerUser = (
+export const registerUser = (
   data
 ) =>
   API.post(
@@ -78,7 +75,7 @@ export const uploadResume = (formData) =>
     data
   );
 
-  export const loginUser = (
+export const loginUser = (
   data
 ) =>
   API.post(
@@ -100,10 +97,10 @@ export const changePassword = (
     data
   );
 
- export const deleteAccount = () =>
+export const deleteAccount = () =>
   API.delete("/settings/delete-account");
 
- export const updateProfile = (
+export const updateProfile = (
   data
 ) =>
   API.put(

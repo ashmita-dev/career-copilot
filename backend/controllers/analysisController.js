@@ -19,28 +19,29 @@ const analyzeRole = async (req, res) => {
       userSkills.map(skill => ({
         skill_name: skill,
       }));
-      
+
     const analysis = analyzeSkills(
-    requiredSkills,
-    formattedUserSkills);
+      requiredSkills,
+      formattedUserSkills
+    );
 
     const userId =
-  req.user.userId;
+      req.user.userId;
 
-await analysisHistoryModel.saveAnalysis(
-  roleId,
-  analysis.matchPercentage,
-  analysis.readinessLevel,
-  analysis.learningTime,
-  userId
-);
+    await analysisHistoryModel.saveAnalysis(
+      roleId,
+      analysis.matchPercentage,
+      analysis.readinessLevel,
+      analysis.learningTime,
+      userId
+    );
 
-await roadmapHistoryModel.saveRoadmapHistory(
-  userId,
-  roleId
-);
+    await roadmapHistoryModel.saveRoadmapHistory(
+      userId,
+      roleId
+    );
+
     res.status(200).json(analysis);
-
   } catch (error) {
     console.error(error);
 

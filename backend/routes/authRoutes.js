@@ -17,42 +17,42 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password } =
       req.body;
-    
-      const existingUser =
-  await pool.query(
-    `
+
+    const existingUser =
+      await pool.query(
+        `
     SELECT *
     FROM auth_users
     WHERE email = $1
     `,
-    [email]
-  );
+        [email]
+      );
 
-if (
-  existingUser.rows.length > 0
-) {
-  return res.status(400).json({
-    success: false,
-    message:
-      "Email already registered",
-  });
-}
+    if (
+      existingUser.rows.length > 0
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Email already registered",
+      });
+    }
 
     const hashedPassword =
       await bcrypt.hash(password, 10);
 
     await pool.query(
-  `
+      `
   INSERT INTO auth_users
   (name, email, password)
   VALUES ($1, $2, $3)
   `,
-  [
-    name,
-    email,
-    hashedPassword,
-  ]
-);
+      [
+        name,
+        email,
+        hashedPassword,
+      ]
+    );
 
     res.json({
       success: true,
@@ -74,7 +74,6 @@ if (
 
 router.post("/login", async (req, res) => {
   try {
-
     const { email, password } = req.body;
 
     const userResult =
@@ -107,30 +106,29 @@ router.post("/login", async (req, res) => {
         success: false,
         message: "Invalid password",
       });
+    }
+
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
       }
-     const token = jwt.sign(
-  {
-    userId: user.id,
-    email: user.email,
-  },
-  process.env.JWT_SECRET,
-  {
-    expiresIn: "7d",
-  }
-);
+    );
 
-return res.json({
-  success: true,
-  message: "Login successful",
-  token,
-  user: {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-  },
-});
-      
-
+    return res.json({
+      success: true,
+      message: "Login successful",
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
     console.error(error);
 
@@ -145,12 +143,10 @@ router.get(
   "/me",
   authMiddleware,
   async (req, res) => {
-
     res.json({
       success: true,
       user: req.user,
     });
-
   }
 );
 
