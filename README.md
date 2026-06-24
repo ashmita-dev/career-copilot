@@ -1,55 +1,129 @@
 # 🚀 Career Copilot
 
-Career Copilot is an AI-inspired career intelligence platform designed to help aspiring software developers evaluate their career readiness, identify skill gaps, analyze GitHub portfolios, and follow personalized learning roadmaps toward their target tech roles.
+Career Copilot is a full-stack AI-inspired career intelligence platform designed to help students and aspiring software developers evaluate their career readiness, identify skill gaps, analyze GitHub portfolios, upload resumes, track career goals, and follow personalized learning roadmaps toward their target tech roles.
 
-The platform combines career planning, resume analysis, portfolio analysis, and actionable recommendations into a single modern dashboard.
+The platform combines career planning, portfolio analysis, GitHub evaluation, progress tracking, and actionable recommendations into a single modern dashboard.
 
 ---
 
-## Live Demo
+## 🌐 Live Demo
 
 https://career-copilot-frontend.onrender.com
 
+---
+
 # ✨ Features
 
-## 🎯 Career Analysis
+## 🔐 Authentication & User Management
+
+* Secure User Registration
+* JWT Authentication
+* Login & Logout System
+* Protected Routes
+* Edit Profile
+* Change Password
+* Delete Account
+* Persistent User Sessions
+
+---
+
+## 🎯 Career Analyzer
+
+Analyze your current skills against industry roles and receive:
 
 * Career Readiness Score
-* Skill Gap Detection
-* Missing Skills Identification
+* Skill Gap Analysis
+* Missing Skills Detection
+* Target Role Matching
 * Personalized Learning Roadmaps
 * Recommended Portfolio Projects
-* Target Role Matching
-* Resume Upload & Analysis
-* Automatic Skill Extraction
 * Resume-Based Career Evaluation
+* Automatic Skill Extraction
+
+---
+
+## 📄 Resume Analysis
+
+Upload resumes and receive:
+
+* Resume Parsing
+* Skill Extraction
+* Role Matching
+* Career Recommendations
+* Readiness Evaluation
 
 ---
 
 ## 🐙 GitHub Analyzer
 
-* Real GitHub Profile Analysis
+Analyze any GitHub profile and receive:
+
 * GitHub Readiness Score
 * Profile Strengths Detection
 * Improvement Recommendations
 * Personalized Action Plan
+* Repository Analysis
+* Total Stars Earned
 * Top Repository Identification
-* Total GitHub Stars Calculation
 * Follower & Repository Insights
-* GitHub Profile Evaluation for Internship Readiness
+* Internship Readiness Assessment
 
 ---
 
-## 📊 Dashboard Experience
+## 🎯 Career Goals Tracker
+
+Create and monitor personalized career goals:
+
+* Goal Creation
+* Progress Tracking
+* Achievement Monitoring
+* Goal Management
+* Career Planning Support
+
+---
+
+## 📊 History Tracking
+
+### Analysis History
+
+* Store Previous Career Analyses
+* Track Career Progress
+* Historical Performance Records
+* Delete Analysis Records
+
+### Roadmap History
+
+* Save Generated Roadmaps
+* Revisit Previous Learning Plans
+* Career Growth Tracking
+
+### GitHub Reports
+
+* Store GitHub Analysis Reports
+* Compare Progress Over Time
+* Track Portfolio Improvements
+
+---
+
+## ⚙️ Settings & Account Controls
+
+* Edit Profile Information
+* Update Name & Email
+* Change Password
+* Secure Account Management
+* Delete Account with Confirmation Modal
+
+---
+
+## 🎨 Dashboard Experience
 
 * Modern Responsive UI
+* Glassmorphism Design
 * Interactive Analysis Cards
 * Visual Score Indicators
+* Mobile Friendly Layout
 * Personalized Recommendations
 * Recruiter-Friendly Insights
-* Career Progress Tracking
-* Goal Management System
-* Analysis History Tracking
 
 ---
 
@@ -67,7 +141,9 @@ https://career-copilot-frontend.onrender.com
 
 * Node.js
 * Express.js
+* JWT Authentication
 * REST APIs
+* Multer (File Uploads)
 
 ## Database
 
@@ -78,80 +154,37 @@ https://career-copilot-frontend.onrender.com
 
 * GitHub REST API
 
----
+## Deployment
 
-# 🔥 Current Modules
-
-## Career Analyzer
-
-Analyze current skills against target roles and discover:
-
-* Match Percentage
-* Missing Skills
-* Career Readiness Score
-* Recommended Learning Path
-* Suggested Portfolio Projects
-* Skill Gap Analysis
-
----
-
-## GitHub Analyzer
-
-Enter any GitHub username and receive:
-
-* GitHub Readiness Score
-* Portfolio Strengths
-* Improvement Suggestions
-* Personalized Next Steps
-* Total Stars Earned
-* Best Performing Repository
-* Profile Quality Assessment
-
----
-
-## Goals Tracker
-
-Create and monitor career goals:
-
-* Target Role Selection
-* Goal Progress Tracking
-* Achievement Status
-* Progress Visualization
-
----
-
-## Analysis History
-
-Track previous analyses:
-
-* Career Analysis Records
-* Historical Performance Tracking
-* Progress Trends
-* Analysis Management
+* Render (Frontend)
+* Render (Backend)
+* Neon PostgreSQL
 
 ---
 
 # 📂 Project Structure
 
-```bash
 career-copilot/
-│
+
 ├── backend/
-│   ├── routes/
-│   ├── models/
-│   ├── config/
-│   ├── uploads/
-│   └── server.js
+│ ├── controllers/
+│ ├── routes/
+│ ├── middleware/
+│ ├── config/
+│ ├── uploads/
+│ └── server.js
 │
+
 ├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── services/
-│   │   └── assets/
+│ ├── src/
+│ │ ├── pages/
+│ │ ├── components/
+│ │ ├── context/
+│ │ ├── services/
+│ │ └── assets/
 │
+
 └── README.md
-```
 
 ---
 
@@ -183,30 +216,31 @@ npm run dev
 
 # 🎯 Future Enhancements
 
+* AI Career Mentor Chatbot
 * AI-Powered Career Insights
 * PDF Career Reports
 * GitHub Contribution Analytics
-* GitHub Language Analysis
 * Repository Quality Assessment
-* Open Source Recommendation Engine
-* User Authentication
-* Saved User Profiles
-* AI Career Mentor Chatbot
-* Internship Readiness Assessment
+* Internship Readiness Predictor
+* Job Recommendation Engine
+* Open Source Recommendation System
+* Company-Specific Skill Gap Analysis
+* AI Resume Improvement Suggestions
 
 ---
 
-# 💡 Why This Project?
+# 💡 Why Career Copilot?
 
-Most students know what role they want but don't know:
+Many students know the role they want but struggle to answer:
 
-* Which skills they're missing
-* Which projects they should build
-* Whether their resume is competitive
-* Whether their GitHub profile is recruiter-ready
-* How long it may take to become job-ready
+* Which skills am I missing?
+* Which projects should I build?
+* Is my GitHub profile recruiter-ready?
+* How competitive is my resume?
+* What should I learn next?
+* How close am I to landing an internship?
 
-Career Copilot bridges that gap by providing actionable, data-driven career guidance and portfolio analysis.
+Career Copilot bridges that gap by providing actionable, data-driven career guidance and portfolio analysis in one place.
 
 ---
 
@@ -216,10 +250,18 @@ Career Copilot bridges that gap by providing actionable, data-driven career guid
 
 B.Tech Computer Science Student
 
-Building practical developer tools that help students become internship and job ready.
+Passionate about building practical software solutions that help students become internship and job ready.
+
+GitHub: https://github.com/ashmita-dev
 
 ---
 
 # ⭐ Support
 
-If you find this project useful, consider starring the repository and sharing feedback.
+If you found this project useful, consider:
+
+⭐ Starring the repository
+
+🍴 Forking the project
+
+📝 Sharing feedback and suggestions
