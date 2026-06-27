@@ -9,6 +9,7 @@ The platform combines career planning, portfolio analysis, GitHub evaluation, pr
 ## 🌐 Live Demo
 
 https://career-copilot-frontend.onrender.com
+
 Register a free account and log in to access all features, including resume analysis, GitHub profile analysis, career readiness evaluation, personalized roadmaps, and progress tracking.
 
 ---
